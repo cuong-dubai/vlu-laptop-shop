@@ -1,8 +1,5 @@
 
 <?php
-
-
-
  define('TEMPLATE', './templates/');
 
 /* Router */

@@ -22,7 +22,7 @@ $config = array(
         'password' => '',
         'dbname' => 'vlu_laptop_shop',
         'port' => 3306,
-        'prefix' => 'table_',
+        'prefix' => '',
         'charset' => 'utf8mb4'
     )
 );

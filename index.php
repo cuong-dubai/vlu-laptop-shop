@@ -1,6 +1,7 @@
 <?php
 session_start();
 define('LIB', './lib/');
+define('LAYOUT', 'layout/');
 
 require_once LIB . "config.php";
 require_once LIB . 'autoload.php';
