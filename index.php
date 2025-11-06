@@ -11,7 +11,15 @@ $d = new Database($config['database']);
 
 $router = new AltoRouter();
 
-require_once LIB . "router.php";
 
+$func = new Functions($d);
+$css = new CssMinify(true, $func);
+
+
+
+
+require_once LIB . "router.php";
 include TEMPLATE . "index.php";
+
+
 ?>

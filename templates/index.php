@@ -2,7 +2,10 @@
 
 <html lang="<?= $config['website']['lang-doc'] ?>">
     <head>
-
+        <?php 
+            include TEMPLATE . LAYOUT . "head.php";
+            include TEMPLATE . LAYOUT . "css.php"; 
+        ?>
     </head>
     <body>
         <div>
