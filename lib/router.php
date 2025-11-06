@@ -73,9 +73,12 @@ if (is_array($match)) {
 
 
 switch ($com) {
+    case "san-pham":
+        $source = "product";
+        $template = "product/product";
+        break;
 
     case '':
-
     case 'index':
 
         $source = "index";

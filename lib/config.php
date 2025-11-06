@@ -15,7 +15,7 @@ $config = array(
     ),
     'database' => array(
         'server-name' => $_SERVER["SERVER_NAME"],
-        'url' => '/vlu_laptop_shop/',
+        'url' => '/vlu-laptop-shop/',
         'type' => 'mysql',
         'host' => 'localhost',
         'username' => 'root',
@@ -30,4 +30,7 @@ $http = 'http://';
 $configUrl = $config['database']['server-name'] . $config['database']['url'];
 $configBase = $http . $configUrl;
 
+
+define('ROOT', str_replace(basename(__DIR__), '', __DIR__));
+define('ASSET', $http . $configUrl);
 define('ADMIN', 'dashboard');
