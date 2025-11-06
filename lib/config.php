@@ -5,9 +5,6 @@ if (!defined('LIB'))
 /* Timezone */
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-/* Cấu hình coder */
-define('VNDTS_CODE', '127724');
-define('VNDTS_STAFF', '');
 
 /* Cấu hình chung */
 $config = array(
@@ -29,4 +26,8 @@ $config = array(
         'charset' => 'utf8mb4'
     )
 );
+$http = 'http://';
+$configUrl = $config['database']['server-name'] . $config['database']['url'];
+$configBase = $http . $configUrl;
 
+define('ADMIN', 'dashboard');
