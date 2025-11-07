@@ -113,3 +113,22 @@
         </div>
     </div>
 </footer>
+
+<script>
+function scrollProducts(direction) {
+    const scrollContainer = document.getElementById('bestSellingScroll');
+    const scrollAmount = 300; // Khoảng cách scroll mỗi lần
+    
+    if (direction === 'left') {
+        scrollContainer.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    } else {
+        scrollContainer.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+</script>
