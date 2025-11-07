@@ -109,6 +109,6 @@ body {
         <div class="img_404">
             <img src="assets/images/404.gif" alt="404">
         </div>
-        <a  href="" >Come back home !</a>
+        <a href="<?= isset($configBase) ? $configBase : '/' ?>">Come back home !</a>
     </div>
 </div>

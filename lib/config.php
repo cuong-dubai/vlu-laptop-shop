@@ -13,6 +13,10 @@ $config = array(
         'email' => '',
         'timefinish' => '05/11/2025'
     ),
+    'website' => array(
+        // Thêm khóa 'lang-doc' mà template đang yêu cầu
+        'lang-doc' => 'vi', 
+    ),
     'database' => array(
         'server-name' => $_SERVER["SERVER_NAME"],
         'url' => '/vlu-laptop-shop/',
@@ -27,7 +31,9 @@ $config = array(
     )
 );
 $http = 'http://';
-$configUrl = $config['database']['server-name'] . $config['database']['url'];
+$port = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443 ? ':' . $_SERVER['SERVER_PORT'] : '';
+$serverName = $config['database']['server-name'] . $port;
+$configUrl = $serverName . $config['database']['url'];
 $configBase = $http . $configUrl;
 
 

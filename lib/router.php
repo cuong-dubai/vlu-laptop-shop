@@ -44,6 +44,11 @@ $match = $router->match();
 
 /* Router check */
 
+// Khởi tạo các biến mặc định
+$com = '';
+$source = '';
+$template = '';
+
 if (is_array($match)) {
 
     if (is_callable($match['target'])) {
