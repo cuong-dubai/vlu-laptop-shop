@@ -3,9 +3,10 @@ class Database
 {
     /**
      * Database credentials
-     * @var string
+     * @var array
      */
-    private $connectionParams = ['type' => 'mysql', 'host' => null, 'username' => null, 'password' => null, 'dbname' => null, 'port' => null, 'charset' => null];
+    private $connectionParams = ['type' => 'mysql', 'host' => null, 'username' => null, 'password' => null, 'dbname' => null, 'port' => null, 'charset' => null, 'url' => null];
+    
     /**
      * FOR UPDATE flag
      * @var bool
@@ -159,16 +160,24 @@ class Database
     public function __construct($type, $host = null, $username = null, $password = null, $dbname = null, $port = null, $charset = null)
     {
         if (is_array($type)) { // if params were passed as array
-            $this->connectionParams = $type;
+            // Sửa logic: Dùng array_merge để giữ lại các giá trị mặc định nếu mảng truyền vào thiếu
+            $this->connectionParams = array_merge($this->connectionParams, $type);
         } elseif (is_object($type)) { // if type is set as pdo object
             $this->pdo = $type;
         } else {
-            foreach ($this->connectionParams as $key => $param) {
-                if (isset($key) && !is_null($key)) {
-                    $this->connectionParams[$key] = $key;
-                }
-            }
+            // Sửa logic: Gán trực tiếp các tham số đầu vào theo thứ tự
+            $args = func_get_args(); 
+            
+            // Gán các tham số đầu vào vào mảng connectionParams theo thứ tự
+            if (isset($args[0])) $this->connectionParams['type']     = $args[0];
+            if (isset($args[1])) $this->connectionParams['host']     = $args[1];
+            if (isset($args[2])) $this->connectionParams['username'] = $args[2];
+            if (isset($args[3])) $this->connectionParams['password'] = $args[3];
+            if (isset($args[4])) $this->connectionParams['dbname']   = $args[4];
+            if (isset($args[5])) $this->connectionParams['port']     = $args[5];
+            if (isset($args[6])) $this->connectionParams['charset']  = $args[6];
         }
+        
         if (isset($this->connectionParams['prefix'])) {
             $this->setPrefix($this->connectionParams['prefix']);
         }
@@ -179,6 +188,7 @@ class Database
         self::$instance = $this;
         $this->getAllSchema();
     }
+    
     /**
      * Abstraction method that will build the part of the WHERE conditions
      *
@@ -342,7 +352,7 @@ class Database
      * Abstraction method that will build the LIMIT part of the WHERE statement
      *
      * @param int|array $numRows Array to define SQL limit in format Array ($count, $offset)
-     *                               or only $count
+     * or only $count
      * @return void
      */
     protected function _buildLimit($numRows)
@@ -404,7 +414,7 @@ class Database
      * Abstraction method that will build the LIMIT part of the WHERE statement
      *
      * @param int|array $numRows Array to define SQL limit in format Array ($count, $offset)
-     *                               or only $count
+     * or only $count
      * @return void
      */
     private function buildLimit($numRows)
@@ -489,7 +499,7 @@ class Database
      * It then builds the SQL query.
      *
      * @param int|array $numRows Array to define SQL limit in format Array ($count, $offset)
-     *                               or only $count
+     * or only $count
      * @param array $tableData Should contain an array of data for updating the database.
      * @return PDOStatement Returns the $stmt object.
      */
@@ -613,9 +623,9 @@ class Database
     /**
      * Delete query. Call the "where" method first.
      *
-     * @param string  $tableName The name of the database table to work with.
+     * @param string  $tableName The name of the database table to work with.
      * @param int|array $numRows Array to define SQL limit in format Array ($count, $offset)
-     *                               or only $count
+     * or only $count
      * @return bool Indicates success. 0 or 1.
      */
     public function delete($tableName, $numRows = null)
@@ -782,7 +792,7 @@ class Database
      * A convenient function that returns TRUE if exists at least an element that
      * satisfy the where condition specified calling the "where" method before this one.
      *
-     * @param string  $tableName The name of the database table to work with.
+     * @param string  $tableName The name of the database table to work with.
      *
      * @return array Contains the returned rows from the select query.
      */
@@ -795,8 +805,8 @@ class Database
      * This method allows you to specify multiple (method chaining optional) AND HAVING statements for SQL queries.
      *
      * @uses $Database->having('SUM(tags) > 10')
-     * @param string $havingProp  The name of the database field.
-     * @param mixed  $havingValue The value of the database field.
+     * @param string $havingProp  The name of the database field.
+     * @param mixed  $havingValue The value of the database field.
      * @param string $operator Comparison operator. Default is =
      * @return Database
      */
@@ -843,9 +853,9 @@ class Database
     /**
      * A convenient SELECT * function.
      *
-     * @param string  $tableName The name of the database table to work with.
+     * @param string  $tableName The name of the database table to work with.
      * @param int|array $numRows Array to define SQL limit in format Array ($count, $offset)
-     *                               or only $count
+     * or only $count
      * @param string $columns Desired columns
      * @return array Contains the returned rows from the select query.
      */
@@ -881,18 +891,20 @@ class Database
     /**
      * A convenient SELECT * function to get one record.
      *
-     * @param string  $tableName The name of the database table to work with.
-     * @param string  $columns Desired columns
+     * @param string  $tableName The name of the database table to work with.
+     * @param string  $columns Desired columns
      * @return array Contains the returned rows from the select query.
      */
     public function getOne($tableName, $columns = '*')
     {
-        $result = $this->get($tableName, 1, $columns);
+        $result = $this->setReturnType(PDO::FETCH_ASSOC)
+            ->get($tableName, 1, $columns);
         if ($result instanceof Database) {
             return $result;
         }
         if ($this->useGenerator) {
-            return $result->current() ? $result->current() : false;
+            // Sửa lỗi: Check if $result is an object (Generator)
+            return (is_object($result) && $result->current()) ? $result->current() : false;
         } else {
             return $result ? $result[0] : false;
         }
@@ -900,9 +912,9 @@ class Database
     /**
      * A convenient SELECT COLUMN function to get a single column value from one row
      *
-     * @param string  $tableName The name of the database table to work with.
-     * @param string  $column    The desired column
-     * @param int     $limit     Limit of rows to select. Use null for unlimited..1 by default
+     * @param string  $tableName The name of the database table to work with.
+     * @param string  $column    The desired column
+     * @param int     $limit     Limit of rows to select. Use null for unlimited..1 by default
      * @return mixed Contains the value of a returned column / array of values
      */
     public function getValue($tableName, $column, $limit = 1)
@@ -913,7 +925,12 @@ class Database
             return null;
         }
         if ($limit == 1) {
-            $current = $result[0];
+            if ($this->useGenerator) {
+                // Sửa lỗi: Check if $result is an object (Generator)
+                $current = is_object($result) ? $result->current() : null;
+            } else {
+                $current = $result[0];
+            }
             if (isset($current["retval"])) {
                 return $current["retval"];
             }
@@ -958,9 +975,9 @@ class Database
      * Method returns generated interval function as a string
      *
      * @param string $diff interval in the formats:
-     *        "1", "-1d" or "- 1 day" -- For interval - 1 day
-     *        Supported intervals [s]econd, [m]inute, [h]hour, [d]day, [M]onth, [Y]ear
-     *        Default null;
+     * "1", "-1d" or "- 1 day" -- For interval - 1 day
+     * Supported intervals [s]econd, [m]inute, [h]hour, [d]day, [M]onth, [Y]ear
+     * Default null;
      * @param string $func Initial date
      * @return string
      */
@@ -1031,9 +1048,9 @@ class Database
      * Method returns generated interval function as an insert/update function
      *
      * @param string $diff interval in the formats:
-     *        "1", "-1d" or "- 1 day" -- For interval - 1 day
-     *        Supported intervals [s]econd, [m]inute, [h]hour, [d]day, [M]onth, [Y]ear
-     *        Default null;
+     * "1", "-1d" or "- 1 day" -- For interval - 1 day
+     * Supported intervals [s]econd, [m]inute, [h]hour, [d]day, [M]onth, [Y]ear
+     * Default null;
      * @param string $func Initial date
      * @return array
      */
@@ -1090,8 +1107,8 @@ class Database
      * This method allows you to specify multiple (method chaining optional) OR HAVING statements for SQL queries.
      *
      * @uses $Database->orHaving('SUM(tags) > 10')
-     * @param string $havingProp  The name of the database field.
-     * @param mixed  $havingValue The value of the database field.
+     * @param string $havingProp  The name of the database field.
+     * @param mixed  $havingValue The value of the database field.
      * @param string $operator Comparison operator. Default is =
      * @return Database
      */
@@ -1103,9 +1120,10 @@ class Database
      * This method allows you to specify multiple (method chaining optional) OR WHERE statements for SQL queries.
      *
      * @uses $Database->orWhere('id', 7)->orWhere('title', 'MyTitle');
-     * @param string $whereProp  The name of the database field.
-     * @param mixed  $whereValue The value of the database field.
+     * @param string $whereProp  The name of the database field.
+     * @param mixed  $whereValue The value of the database field.
      * @param string $operator Comparison operator. Default is =
+     * @param string $cond Condition of where statement (OR, AND)
      * @return Database
      */
     public function orWhere($whereProp, $whereValue = 'DBNULL', $operator = '=')
@@ -1116,7 +1134,7 @@ class Database
      * Pagination wraper to get()
      *
      * @access public
-     * @param string  $table The name of the database table to work with
+     * @param string  $table The name of the database table to work with
      * @param int $page Page number
      * @param array|string $fields Array or coma separated list of fields to fetch
      * @return array
@@ -1218,7 +1236,8 @@ class Database
     {
         $result = $this->rawQuery($query, $params);
         if ($this->useGenerator) {
-            return $result->current() ? $result->current() : false;
+            // Sửa lỗi: Check if $result is an object (Generator)
+            return (is_object($result) && $result->current()) ? $result->current() : false;
         } else {
             return $result ? $result[0] : false;
         }
@@ -1228,23 +1247,28 @@ class Database
      * If 'limit 1' will be found, then string will be returned instead of array
      * Same idea as getValue()
      *
-     * @param string $query      User-provided query to execute.
-     * @param array  $params Variables array to bind to the SQL statement.
+     * @param string $query      User-provided query to execute.
+     * @param array  $params Variables array to bind to the SQL statement.
      * @return mixed Contains the returned rows from the query.
      */
     public function rawQueryValue($query, $params = null)
     {
         $result = $this->rawQuery($query, $params);
-        if ($this->useGenerator && !$result->current()) {
+        
+        // Sửa lỗi: Thêm is_object() để kiểm tra $result có phải là Generator/Object không
+        if ($this->useGenerator && (!is_object($result) || !$result->current())) {
             return null;
         } else if (!$this->useGenerator && !$result) {
             return null;
         }
+        
         if ($this->useGenerator) {
-            $firstResult = $result->current();
+            // Sửa lỗi: Thêm is_object() để kiểm tra trước khi gọi current()
+            $firstResult = is_object($result) ? $result->current() : null;
         } else {
             $firstResult = $result[0];
         }
+        
         $key = key($firstResult);
         $limit = preg_match('/limit\s+1;?$/i', $query);
         if ($limit == true) {
@@ -1411,7 +1435,8 @@ class Database
     }
     function getAllSchema($table = null)
     {
-        if (!count($this->_schema)) {
+        // Sửa lỗi: Dùng empty() thay cho cú pháp count(value: ...) hoặc !count(...)
+        if (empty($this->_schema)) {
             $rs = $this->rawQuery("select * from information_schema.columns where table_schema = '" . $this->connectionParams['dbname'] . "'");
             $rdata = array();
             foreach ($rs as $k => $v) {
@@ -1424,14 +1449,18 @@ class Database
             }
             $this->_schema = $rdata;
         }
-        if ($table != null && $this->_schema != null) return $this->_schema[$table];
+        // Sửa lỗi: Kiểm tra empty trước khi truy cập phần tử mảng
+        if ($table != null && !empty($this->_schema) && isset($this->_schema[$table])) {
+            return $this->_schema[$table];
+        }
+        return null;
     }
     /**
      * Update query. Be sure to first call the "where" method.
      *
      * @param string $tableName The name of the database table to work with.
-     * @param array  $tableData Array of data to update the desired row.
-     * @param int    $numRows   Limit on the number of rows that can be updated.
+     * @param array  $tableData Array of data to update the desired row.
+     * @param int    $numRows   Limit on the number of rows that can be updated.
      * @return bool
      */
     public function fillTable($table, &$data, $old_data = array(), $where = "", $is_update = false)
@@ -1466,7 +1495,7 @@ class Database
                     $value = $data[$k];
                     if (!$value) {
                         $_type = $v['DATA_TYPE'];
-                        if (strpos($_type, 'int') !== false | strpos($_type, 'float') !== false | strpos($_type, 'double') !== false) {
+                        if (strpos($_type, 'int') !== false || strpos($_type, 'float') !== false || strpos($_type, 'double') !== false) {
                             $value = 0;
                         }
                         if ($_type == 'date') {
@@ -1483,7 +1512,7 @@ class Database
                 } else {
                     $_type = $v['DATA_TYPE'];
                     $value = "";
-                    if (strpos($_type, 'int') !== false | strpos($_type, 'float') !== false | strpos($_type, 'double') !== false) {
+                    if (strpos($_type, 'int') !== false || strpos($_type, 'float') !== false || strpos($_type, 'double') !== false) {
                         $value = 0;
                     }
                     if ($_type == 'date') {
@@ -1552,8 +1581,8 @@ class Database
      * This method allows you to specify multiple (method chaining optional) AND WHERE statements for SQL queries.
      *
      * @uses $Database->where('id', 7)->where('title', 'MyTitle');
-     * @param string $whereProp  The name of the database field.
-     * @param mixed  $whereValue The value of the database field.
+     * @param string $whereProp  The name of the database field.
+     * @param mixed  $whereValue The value of the database field.
      * @param string $operator Comparison operator. Default is =
      * @param string $cond Condition of where statement (OR, AND)
      * @return Database
@@ -1579,26 +1608,18 @@ class Database
     /* Exception */
     private function sendException($name, $errorNumber = '', $erroMessage = '', $sql = '')
     {
-        $exceptions = array();
-        $exceptions['vars'] = array(
-            '{name}',
-            '{errornumber}',
-            '{errormessage}',
-            '{sqlquery}'
-        );
-        $exceptions['vals'] = array(
-            $name,
-            $errorNumber,
-            $erroMessage,
-            $sql
-        );
-
-        ob_start();
-        include dirname(__DIR__) . "/sample/pdo/exception.php";
-        $template = ob_get_contents();
-        ob_clean();
-
-        return str_replace($exceptions['vars'], $exceptions['vals'], $template);
+        // KHÔNG CÓ FILE exception.php, THAY THẾ BẰNG LOGIC IN LỖI TRỰC TIẾP
+        
+        $output = "<!DOCTYPE html><html><head><title>Database Error</title><style>body{font-family: Arial, sans-serif; background-color: #f8f8f8; color: #333; margin: 20px;} h2{color: #cc0000;} pre{background-color: #eee; border: 1px solid #ddd; padding: 10px; overflow-x: auto;}</style></head><body>";
+        $output .= "<h2>Database Error: {$name}</h2>";
+        $output .= "<p><strong>Mã lỗi:</strong> {$errorNumber}</p>";
+        $output .= "<p><strong>Thông báo:</strong> {$erroMessage}</p>";
+        if ($sql) {
+            $output .= "<p><strong>Truy vấn bị lỗi:</strong></p><pre>{$sql}</pre>";
+        }
+        $output .= "</body></html>";
+        
+        return $output;
     }
     /* Create logs */
     public function insertParamsLogs($query, $params = null)
