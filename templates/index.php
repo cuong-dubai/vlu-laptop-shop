@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="<?= $config['website']['lang-doc'] ?>">
+<html lang="vi">
     <head>
         <?php 
             include TEMPLATE . LAYOUT . "head.php";
