@@ -12,6 +12,8 @@
             <?php 
                 include TEMPLATE . LAYOUT . "header.php";
                 include TEMPLATE . LAYOUT . "menu.php";
+                include TEMPLATE . LAYOUT . "slide.php";
+                
             ?>
             <div class="w-clear">
 
@@ -22,5 +24,8 @@
                 include TEMPLATE . LAYOUT . "footer.php";
             ?>
         </div>
+        <?php 
+         include TEMPLATE . LAYOUT . "js.php";
+        ?>
     </body>
 </html>
