@@ -11,6 +11,7 @@
         <div>
             <?php 
                 include TEMPLATE . LAYOUT . "header.php";
+                include TEMPLATE . LAYOUT . "menu.php";
             ?>
             <div class="w-clear">
 

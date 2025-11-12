@@ -14,7 +14,6 @@ $config = array(
         'timefinish' => '05/11/2025'
     ),
     'website' => array(
-        // Thêm khóa 'lang-doc' mà template đang yêu cầu
         'lang-doc' => 'vi', 
     ),
     'database' => array(
