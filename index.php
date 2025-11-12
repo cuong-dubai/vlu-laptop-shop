@@ -14,6 +14,7 @@ $router = new AltoRouter();
 
 $func = new Functions($d);
 $css = new CssMinify(true, $func);
+$js = new JsMinify(true, $func);
 
 
 

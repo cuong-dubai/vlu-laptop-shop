@@ -40,7 +40,7 @@ body {
 
 
 .wrap-content{
-  max-width: 1386px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 10px;
 }
@@ -144,3 +144,14 @@ body {
 }
 
 ul.primary-menu {}
+
+.slide__container{display:flex;gap: 12px;padding:19px 0 10px 0}
+.slide__main{width:calc(100% - 340px);padding-bottom: 10px;}
+.slide__subs{width:331px}
+.slide__main,.slide__subs{height:100%;box-shadow:none}
+.slide__sub{margin-bottom: 12px;}
+section.section-slider.position-relative {
+    background: url("../images/bg__slide.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
