@@ -14,6 +14,7 @@ define('LAYOUT', 'layout/');
 
 
 require_once LIB . "config.php";
+require_once LIB . "config-type.php";
 
 require_once LIB . 'autoload.php';
 
