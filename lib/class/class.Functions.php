@@ -24,7 +24,13 @@ class Functions
 
         return $str;
     }
-
+       public function generateHash()
+    {
+        if (!$this->hash) {
+            $this->hash = $this->stringRandom(10);
+        }
+        return $this->hash;
+    }
     public function redirect($url)
     {
         header("Location: " . $url);
@@ -45,5 +51,9 @@ class Functions
             unset($_SESSION[$loginAdmin]);
             return false;
         }
+    }
+      public function encryptPassword($secret = '', $str = '', $salt = '')
+    {
+        return md5($secret . $str . $salt);
     }
 }
