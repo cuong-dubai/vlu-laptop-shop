@@ -336,8 +336,6 @@ class Database
             die($this->sendException('SQL Prepare Error', $this->lastError[0], $this->lastError[2], $this->query));
         }
 
-        $this->createLogs(@$_SESSION[$loginAdmin]['username'], 'insert', $tableName, $this->pdo()
-            ->lastInsertId());
         $this->reset();
         if (
             $status && $this->pdo()
@@ -1220,7 +1218,6 @@ class Database
         }
         if (strpos($this->query, 'delete') !== false) {
             $queryLogs = $this->insertParamsLogs($this->query, $params);
-            $this->createLogs(@$_SESSION[$loginAdmin]['username'], 'query', "tables", $queryLogs);
         }
         $this->reset();
         return $result;
@@ -1563,8 +1560,6 @@ class Database
             die($this->sendException('SQL Prepare Error', $this->lastError[0], $this->lastError[2], $this->query));
         }
 
-        $wherelogs = json_encode($this->where);
-        $this->createLogs(@$_SESSION[$loginAdmin]['username'], 'update', $tableName, $wherelogs);
         $this->reset();
         $this->rowCount = $stmt->rowCount();
         return $status;
@@ -1633,27 +1628,6 @@ class Database
             }
         } else $queryLogs = $query;
         return $queryLogs;
-    }
-    public function createLogs($user = 'Unnamed', $act = '', $com = '', $id = 0)
-    {
-        $logsfile = $_SERVER['DOCUMENT_ROOT'] . $this->connectionParams['url'] . "logs";
-
-        if (!is_dir($logsfile)) {
-            mkdir($logsfile, 0777, true);
-            chmod($logsfile, 0777);
-        }
-
-        $ip_user = $this->getClientIP();
-        $name_file = date('d-m-Y', time());
-
-        $file = fopen($logsfile . "/" . $name_file . ".txt", "a");
-        $data_old = file_get_contents($logsfile . "/" . $name_file . ".txt");
-        $time_act = date('H:i:s d/m/Y', time());
-        fwrite($file, $ip_user . "(" . $user . ")" . "--" . $act . "--" . $com . "(" . $id . ") (" . $time_act . ")\n");
-        fclose($file);
-
-        $name_file_old = date('d-m-Y', time() - 7776000);
-        if (file_exists($logsfile . "/" . $name_file_old . ".txt")) unlink($logsfile . "/" . $name_file_old . ".txt");
     }
     public function getClientIP()
     {
