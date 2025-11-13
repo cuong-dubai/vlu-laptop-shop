@@ -30,4 +30,20 @@ class Functions
         header("Location: " . $url);
         exit;
     }
+    public function checkLoginAdmin()
+    {
+        global $loginAdmin;
+
+        $token = (!empty($_SESSION[$loginAdmin]['token'])) ? $_SESSION[$loginAdmin]['token'] : '';
+        $row = $this->d->rawQuery("select secret_key from #_user where secret_key = ? and find_in_set('hienthi',status)", array($token));
+
+        if (count($row) == 1 && $row[0]['secret_key'] != '') {
+            return true;
+        } else {
+            if (!empty($_SESSION[TOKEN]))
+                unset($_SESSION[TOKEN]);
+            unset($_SESSION[$loginAdmin]);
+            return false;
+        }
+    }
 }
