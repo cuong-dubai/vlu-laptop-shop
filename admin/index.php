@@ -43,19 +43,9 @@ require_once LIB . "requick.php";
 
     <title>VLU LAPTOP SHOP - Admin Dashboard</title>
 
-
-
-    <!-- Css all -->
-
     <?php include TEMPLATE . LAYOUT . "css.php";
 
-    if ($_GET['act'] == 'login') { ?>
-
-        <link href="extensions/css/login.css" rel="stylesheet">
-
-    <?php }
-
-    ?>
+?>
 
 </head>
 
