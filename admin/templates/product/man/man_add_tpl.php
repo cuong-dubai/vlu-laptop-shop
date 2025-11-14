@@ -1,3 +1,17 @@
+
+<?php 
+
+if ($act == "add") $labelAct = "Thêm mới";
+else if ($act == "edit") $labelAct = "Chỉnh sửa";
+else if ($act == "copy")  $labelAct = "Sao chép";
+
+$linkMan = "index.php?com=product&act=man&type=" . $type;
+if ($act == 'add') $linkFilter = "index.php?com=product&act=add&type=" . $type;
+else if ($act == 'edit') $linkFilter = "index.php?com=product&act=edit&type=" . $type . "&id=" . $id;
+if ($act == "copy") $linkSave = "index.php?com=product&act=save_copy&type=" . $type;
+else $linkSave = "index.php?com=product&act=save&type=" . $type;
+?>
+
 <!-- Content Header -->
 <section class="content-header text-sm">
     <div class="container-fluid">
@@ -13,9 +27,9 @@
 <section class="content">
     <form class="validation-form" novalidate method="post" action="<?= $linkSave ?>" enctype="multipart/form-data">
         <div class="card-footer text-sm sticky-top">
-            <button type="submit" class="btn btn-sm bg-gradient-primary submit-check" disabled><i
+            <button type="submit" class="btn btn-sm bg-gradient-primary submit-check"><i
                     class="far fa-save mr-2"></i>Lưu</button>
-            <button type="submit" class="btn btn-sm bg-gradient-success submit-check" name="save-here" disabled><i
+            <button type="submit" class="btn btn-sm bg-gradient-success submit-check" name="save-here"><i
                     class="far fa-save mr-2"></i>Lưu tại trang</button>
             <button type="reset" class="btn btn-sm bg-gradient-secondary"><i class="fas fa-redo mr-2"></i>Làm
                 lại</button>
@@ -93,7 +107,7 @@
                                     <?php if (isset($config['product'][$type]['list']) && $config['product'][$type]['list'] == true) { ?>
                                         <div class="form-group col-xl-6 col-sm-4">
                                             <label class="d-block" for="id_list">Danh mục cấp 1:</label>
-                                            <?= $func->getAjaxCategory('product', 'list', $type) ?>
+                                            
                                         </div>
                                     <?php } ?>
 
@@ -102,10 +116,28 @@
                         </div>
                     </div>
                 <?php } ?>
+                <?php if (isset($config['product'][$type]['images']) && $config['product'][$type]['images'] == true) { ?>
+                    <div class="card card-primary card-outline text-sm">
+                        <div class="card-header">
+                            <h3 class="card-title">Hình ảnh <?= $config['product'][$type]['title_main'] ?></h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <?php
+                            /* Photo detail */
+                            $photoDetail = array();
+                            $photoDetail['upload'] = '';
+                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? $item['photo'] : '';
+                            $photoDetail['dimension'] = "Width: " . $config['product'][$type]['width'] . " px - Height: " . $config['product'][$type]['height'] . " px (" . $config['product'][$type]['img_type'] . ")";
 
-
-
-
+                            /* Image */
+                            include TEMPLATE . LAYOUT . "image.php";
+                            ?>
+                        </div>
+                    </div>
+                <?php } ?>
 
             </div>
         </div>
@@ -212,9 +244,9 @@
 
 
         <div class="card-footer text-sm">
-            <button type="submit" class="btn btn-sm bg-gradient-primary submit-check" disabled><i
+            <button type="submit" class="btn btn-sm bg-gradient-primary submit-check"><i
                     class="far fa-save mr-2"></i>Lưu</button>
-            <button type="submit" class="btn btn-sm bg-gradient-success submit-check" name="save-here" disabled><i
+            <button type="submit" class="btn btn-sm bg-gradient-success submit-check" name="save-here"><i
                     class="far fa-save mr-2"></i>Lưu tại trang</button>
             <button type="reset" class="btn btn-sm bg-gradient-secondary"><i class="fas fa-redo mr-2"></i>Làm
                 lại</button>
