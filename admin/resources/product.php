@@ -1,10 +1,16 @@
 <?php
-if (!defined('SOURCES')) die("Error");
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+if (!defined('SOURCES'))
+    die("Error");
 /* Kiểm tra active product */
 if (isset($config['product'])) {
     $arrCheck = array();
-    foreach ($config['product'] as $k => $v) $arrCheck[] = $k;
-    if (!count($arrCheck) || !in_array($type, $arrCheck)) $func->transfer("Trang không tồn tại", "index.php", false);
+    foreach ($config['product'] as $k => $v)
+        $arrCheck[] = $k;
+    if (!count($arrCheck) || !in_array($type, $arrCheck))
+        $func->transfer("Trang không tồn tại", "index.php", false);
 } else {
     $func->transfer("Trang không tồn tại", "index.php", false);
 }
@@ -15,30 +21,262 @@ if (isset($_POST['data'])) {
     $dataUrl = isset($_POST['data']) ? $_POST['data'] : null;
     if ($dataUrl) {
         foreach ($arrUrl as $k => $v) {
-            if (isset($dataUrl[$arrUrl[$k]])) $strUrl .= "&" . $arrUrl[$k] . "=" . htmlspecialchars($dataUrl[$arrUrl[$k]]);
+            if (isset($dataUrl[$arrUrl[$k]]))
+                $strUrl .= "&" . $arrUrl[$k] . "=" . htmlspecialchars($dataUrl[$arrUrl[$k]]);
         }
     }
 } else {
     foreach ($arrUrl as $k => $v) {
-        if (isset($_REQUEST[$arrUrl[$k]])) $strUrl .= "&" . $arrUrl[$k] . "=" . htmlspecialchars($_REQUEST[$arrUrl[$k]]);
+        if (isset($_REQUEST[$arrUrl[$k]]))
+            $strUrl .= "&" . $arrUrl[$k] . "=" . htmlspecialchars($_REQUEST[$arrUrl[$k]]);
     }
-    if (!empty($_REQUEST['comment_status'])) $strUrl .= "&comment_status=" . htmlspecialchars($_REQUEST['comment_status']);
-    if (isset($_REQUEST['keyword'])) $strUrl .= "&keyword=" . htmlspecialchars($_REQUEST['keyword']);
+    if (!empty($_REQUEST['comment_status']))
+        $strUrl .= "&comment_status=" . htmlspecialchars($_REQUEST['comment_status']);
+    if (isset($_REQUEST['keyword']))
+        $strUrl .= "&keyword=" . htmlspecialchars($_REQUEST['keyword']);
 }
 switch ($act) {
-        /* Man */
+    /* Man */
     case "man":
-        viewMans();
+        viewProduct();
         $template = "product/man/mans";
         break;
     case "add":
         $template = "product/man/man_add";
         break;
+    case "save":
+        saveProduct();
+        break;
     default:
         $template = "404";
 }
-/* View man */
-function viewMans()
+/* ew man */
+function viewProduct()
 {
-    
+    global $d, $func, $comment, $strUrl, $curPage, $items, $paging, $type;
+    $where = "";
+    $idlist = (isset($_REQUEST['id_list'])) ? htmlspecialchars($_REQUEST['id_list']) : 0;
+    $idbrand = (isset($_REQUEST['id_brand'])) ? htmlspecialchars($_REQUEST['id_brand']) : 0;
+    if ($idlist)
+        $where .= " and id_list=$idlist";
+    if ($idbrand)
+        $where .= " and id_brand=$idbrand";
+    if (isset($_REQUEST['keyword'])) {
+        $keyword = htmlspecialchars($_REQUEST['keyword']);
+        $where .= " and (namevi LIKE '%$keyword%' or nameen LIKE '%$keyword%')";
+    }
+    $perPage = 10;
+    $startpoint = ($curPage * $perPage) - $perPage;
+    $limit = " limit " . $startpoint . "," . $perPage;
+    $sql = "select * from #_product where type = ? $where order by numb,id desc $limit";
+    $items = $d->rawQuery($sql, array($type));
+    $sqlNum = "select count(*) as 'num' from #_product where type = ? $where order by numb,id desc";
+    $count = $d->rawQueryOne($sqlNum, array($type));
+    $total = (!empty($count)) ? $count['num'] : 0;
+    $url = "index.php?com=product&act=man" . $strUrl . "&type=" . $type;
+    $paging = $func->pagination($total, $perPage, $curPage, $url);
+}
+function saveProduct()
+{
+    global $d, $strUrl, $func, $flash, $curPage, $config, $com, $act, $type, $configBase, $setting;
+
+    /* Check post */
+    if (empty($_POST)) {
+        $func->transfer("Không nhận được dữ liệu", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+    }
+
+    /* Post dữ liệu */
+    $message = '';
+    $response = array();
+    $savehere = (isset($_POST['save-here'])) ? true : false;
+    $id = (!empty($_POST['id'])) ? htmlspecialchars($_POST['id']) : 0;
+    $data = (!empty($_POST['data'])) ? $_POST['data'] : null;
+
+    /* Xử lý dữ liệu */
+    if ($data) {
+        foreach ($data as $column => $value) {
+            if (is_array($value)) {
+                foreach ($value as $k2 => $v2)
+                    $option[$k2] = $v2;
+                $data[$column] = json_encode($option);
+            } else {
+                if (strpos($column, 'content') !== false || strpos($column, 'desc') !== false) {
+                    $data[$column] = htmlspecialchars($func->sanitize($value, 'iframe'));
+                } else {
+                    $data[$column] = htmlspecialchars($func->sanitize($value));
+                }
+            }
+        }
+
+        /* Slug */
+        if (!empty($config['product'][$type]['slug'])) {
+            if (!empty($_POST['slug']))
+                $data['slug'] = $func->changeTitle(htmlspecialchars($_POST['slug']));
+            else
+                $data['slug'] = (!empty($data['name'])) ? $func->changeTitle($data['name']) : '';
+        }
+
+        /* Status */
+        if (isset($_POST['status'])) {
+            $status = '';
+            foreach ($_POST['status'] as $attr_column => $attr_value) {
+                if ($attr_value != "")
+                    $status .= $attr_value . ',';
+            }
+            $data['status'] = (!empty($status)) ? rtrim($status, ",") : "";
+        } else {
+            $data['status'] = "";
+        }
+
+        /* Giá tiền */
+        $data['regular_price'] = (!empty($data['regular_price'])) ? str_replace(",", "", $data['regular_price']) : 0;
+        $data['sale_price'] = (!empty($data['sale_price'])) ? str_replace(",", "", $data['sale_price']) : 0;
+        $data['discount'] = (!empty($data['discount'])) ? $data['discount'] : 0;
+
+        $data['type'] = $type;
+
+        /* Xử lý id_list */
+        if (isset($data['id_list']) && $data['id_list'] !== '') {
+            $data['id_list'] = (int) $data['id_list'];
+        } else {
+            unset($data['id_list']); // quan trọng nhất!
+        }
+
+        /* Xử lý id_brand */
+        if (isset($data['id_brand']) && $data['id_brand'] !== '') {
+            $data['id_brand'] = (int) $data['id_brand'];
+        } else {
+            unset($data['id_brand']); // quan trọng nhất!
+        }
+    }
+
+    /* SEO */
+    if (isset($config['product'][$type]['seo']) && $config['product'][$type]['seo'] == true) {
+        $dataSeo = (!empty($_POST['dataSeo'])) ? $_POST['dataSeo'] : null;
+        if ($dataSeo) {
+            foreach ($dataSeo as $column => $value) {
+                $dataSeo[$column] = htmlspecialchars($func->sanitize($value));
+            }
+        }
+    }
+
+    /* Validate data */
+    $checkTitle = $func->checkTitle($data);
+    if (!empty($checkTitle)) {
+        foreach ($checkTitle as $k => $v)
+            $response['messages'][] = $v;
+    }
+
+    if (!empty($config['product'][$type]['slug'])) {
+        $dataSlug = array(
+            'slug' => $data['slug'],
+            'id' => $id,
+            'copy' => ($act == 'save_copy') ? true : false
+        );
+        $checkSlug = $func->checkSlug($dataSlug);
+        if ($checkSlug == 'exist')
+            $response['messages'][] = 'Đường dẫn đã tồn tại';
+        else if ($checkSlug == 'empty')
+            $response['messages'][] = 'Đường dẫn không được trống';
+    }
+
+    if (!empty($data['regular_price']) && !$func->isNumber($data['regular_price']))
+        $response['messages'][] = 'Giá bán không hợp lệ';
+    if (!empty($data['sale_price']) && !$func->isNumber($data['sale_price']))
+        $response['messages'][] = 'Giá mới không hợp lệ';
+    if (!empty($data['discount']) && !$func->isNumber($data['discount']))
+        $response['messages'][] = 'Chiết khấu không hợp lệ';
+
+    /* Nếu có lỗi */
+    if (!empty($response)) {
+        if (!empty($data))
+            foreach ($data as $k => $v)
+                if (!empty($v))
+                    $flash->set($k, $v);
+        if (!empty($dataSeo))
+            foreach ($dataSeo as $k => $v)
+                if (!empty($v))
+                    $flash->set($k, $v);
+
+        $response['status'] = 'danger';
+        $flash->set('message', base64_encode(json_encode($response)));
+
+        if ($id || $act == 'save_copy') {
+            if ($act == 'save_copy')
+                $func->redirect("index.php?com=product&act=copy&type=" . $type . "&p=" . $curPage . $strUrl . "&id_copy=" . $id);
+            else
+                $func->redirect("index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id);
+        } else {
+            $func->redirect("index.php?com=product&act=add&type=" . $type . "&p=" . $curPage . $strUrl);
+        }
+    }
+
+    /* --- INSERT OR UPDATE --- */
+
+    if ($id && $act != 'save_copy') {
+        /* UPDATE */
+        $data['date_updated'] = time();
+        $d->where('id', $id);
+        $d->where('type', $type);
+
+        if ($d->update('product', $data)) {
+            /* Ảnh đại diện */
+            if ($func->hasFile("file")) {
+                $photoUpdate = array();
+                $file_name = $func->uploadName($_FILES["file"]["name"]);
+                if ($photo = $func->uploadImage("file", $config['product'][$type]['img_type'], UPLOAD_PRODUCT, $file_name)) {
+                    $row = $d->rawQueryOne("select id, photo from #_product where id = ? and type = ? limit 0,1", array($id, $type));
+                    if (!empty($row))
+                        $func->deleteFile(UPLOAD_PRODUCT . $row['photo']);
+
+                    $photoUpdate['photo'] = $photo;
+                    $d->where('id', $id);
+                    $d->update('product', $photoUpdate);
+                }
+            }
+
+            if ($savehere)
+                $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id);
+            else
+                $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl);
+        } else {
+            $func->transfer("Cập nhật dữ liệu bị lỗi", "index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id, false);
+        }
+    } else {
+        /* INSERT */
+        $data['date_created'] = time();
+
+        if ($d->insert('product', $data)) {
+            $id_insert = $d->getLastInsertId();
+
+            /* Ảnh đại diện */
+            if ($func->hasFile("file")) {
+                $file_name = $func->uploadName($_FILES['file']["name"]);
+                if ($photo = $func->uploadImage("file", $config['product'][$type]['img_type'], UPLOAD_PRODUCT, $file_name)) {
+                    $d->where('id', $id_insert);
+                    $d->update('product', ['photo' => $photo]);
+                }
+            }
+
+            /* Update gallery */
+            $hash = (isset($_POST['hash']) && $_POST['hash'] != '') ? addslashes($_POST['hash']) : null;
+            if ($hash)
+                $d->rawQuery("update #_gallery set hash = ?, id_parent = ? where hash = ?", array('', $id_insert, $hash));
+
+            /* Điều hướng */
+            if ($act == 'save_copy') {
+                if ($savehere)
+                    $func->transfer("Sao chép dữ liệu thành công", "index.php?com=product&act=edit&type=" . $type . "&id=" . $id_insert);
+                else
+                    $func->transfer("Sao chép dữ liệu thành công", "index.php?com=product&act=man&type=" . $type);
+            } else {
+                if ($savehere)
+                    $func->transfer("Lưu dữ liệu thành công", "index.php?com=product&act=edit&type=" . $type . "&id=" . $id_insert);
+                else
+                    $func->transfer("Lưu dữ liệu thành công", "index.php?com=product&act=man&type=" . $type);
+            }
+        } else {
+            $func->transfer("Lưu dữ liệu bị lỗi", "index.php?com=product&act=add&type=" . $type, false);
+        }
+    }
 }

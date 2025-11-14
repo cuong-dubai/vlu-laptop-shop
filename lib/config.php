@@ -53,4 +53,7 @@ $loginAdmin = $config['login']['admin'];
 
 define('ROOT', str_replace(basename(__DIR__), '', __DIR__));
 define('ASSET', $http . $configUrl);
-define('ADMIN', 'dashboard');
+define('ADMIN', 'admin');
+
+/* Cấu hình upload */
+require_once LIB . "constant.php";

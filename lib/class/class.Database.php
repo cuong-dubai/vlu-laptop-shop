@@ -6,7 +6,7 @@ class Database
      * @var array
      */
     private $connectionParams = ['type' => 'mysql', 'host' => null, 'username' => null, 'password' => null, 'dbname' => null, 'port' => null, 'charset' => null, 'url' => null];
-    
+
     /**
      * FOR UPDATE flag
      * @var bool
@@ -166,18 +166,25 @@ class Database
             $this->pdo = $type;
         } else {
             // Sửa logic: Gán trực tiếp các tham số đầu vào theo thứ tự
-            $args = func_get_args(); 
-            
+            $args = func_get_args();
+
             // Gán các tham số đầu vào vào mảng connectionParams theo thứ tự
-            if (isset($args[0])) $this->connectionParams['type']     = $args[0];
-            if (isset($args[1])) $this->connectionParams['host']     = $args[1];
-            if (isset($args[2])) $this->connectionParams['username'] = $args[2];
-            if (isset($args[3])) $this->connectionParams['password'] = $args[3];
-            if (isset($args[4])) $this->connectionParams['dbname']   = $args[4];
-            if (isset($args[5])) $this->connectionParams['port']     = $args[5];
-            if (isset($args[6])) $this->connectionParams['charset']  = $args[6];
+            if (isset($args[0]))
+                $this->connectionParams['type'] = $args[0];
+            if (isset($args[1]))
+                $this->connectionParams['host'] = $args[1];
+            if (isset($args[2]))
+                $this->connectionParams['username'] = $args[2];
+            if (isset($args[3]))
+                $this->connectionParams['password'] = $args[3];
+            if (isset($args[4]))
+                $this->connectionParams['dbname'] = $args[4];
+            if (isset($args[5]))
+                $this->connectionParams['port'] = $args[5];
+            if (isset($args[6]))
+                $this->connectionParams['charset'] = $args[6];
         }
-        
+
         if (isset($this->connectionParams['prefix'])) {
             $this->setPrefix($this->connectionParams['prefix']);
         }
@@ -188,7 +195,7 @@ class Database
         self::$instance = $this;
         $this->getAllSchema();
     }
-    
+
     /**
      * Abstraction method that will build the part of the WHERE conditions
      *
@@ -339,9 +346,9 @@ class Database
         $this->reset();
         if (
             $status && $this->pdo()
-            ->lastInsertId() > 0
+                ->lastInsertId() > 0
         ) {
-            return (int)$this->pdo()
+            return (int) $this->pdo()
                 ->lastInsertId();
         }
         return $status;
@@ -359,9 +366,9 @@ class Database
             return;
         }
         if (is_array($numRows)) {
-            $this->query .= ' LIMIT ' . (int)$numRows[0] . ', ' . (int)$numRows[1];
+            $this->query .= ' LIMIT ' . (int) $numRows[0] . ', ' . (int) $numRows[1];
         } else {
-            $this->query .= ' LIMIT ' . (int)$numRows;
+            $this->query .= ' LIMIT ' . (int) $numRows;
         }
     }
     /**
@@ -378,7 +385,8 @@ class Database
         $isInsert = in_array($this->queryType, ['REPLACE', 'INSERT']);
         $dataColumns = array_keys($tableData);
         if ($isInsert) {
-            if (isset($dataColumns[0])) $this->query .= ' (`' . implode('`, `', $dataColumns) . '`) ';
+            if (isset($dataColumns[0]))
+                $this->query .= ' (`' . implode('`, `', $dataColumns) . '`) ';
             $this->query .= ' VALUES (';
         } else {
             $this->query .= " SET ";
@@ -421,9 +429,9 @@ class Database
             return;
         }
         if (is_array($numRows)) {
-            $this->query .= ' LIMIT ' . (int)$numRows[0] . ', ' . (int)$numRows[1];
+            $this->query .= ' LIMIT ' . (int) $numRows[0] . ', ' . (int) $numRows[1];
         } else {
-            $this->query .= ' LIMIT ' . (int)$numRows;
+            $this->query .= ' LIMIT ' . (int) $numRows;
         }
     }
     /**
@@ -1040,7 +1048,7 @@ class Database
      */
     public function not($col = null)
     {
-        return ["[N]" => (string)$col];
+        return ["[N]" => (string) $col];
     }
     /**
      * Method returns generated interval function as an insert/update function
@@ -1251,21 +1259,21 @@ class Database
     public function rawQueryValue($query, $params = null)
     {
         $result = $this->rawQuery($query, $params);
-        
+
         // Sửa lỗi: Thêm is_object() để kiểm tra $result có phải là Generator/Object không
         if ($this->useGenerator && (!is_object($result) || !$result->current())) {
             return null;
         } else if (!$this->useGenerator && !$result) {
             return null;
         }
-        
+
         if ($this->useGenerator) {
             // Sửa lỗi: Thêm is_object() để kiểm tra trước khi gọi current()
             $firstResult = is_object($result) ? $result->current() : null;
         } else {
             $firstResult = $result[0];
         }
-        
+
         $key = key($firstResult);
         $limit = preg_match('/limit\s+1;?$/i', $query);
         if ($limit == true) {
@@ -1463,15 +1471,16 @@ class Database
     public function fillTable($table, &$data, $old_data = array(), $where = "", $is_update = false)
     {
         $fields = $this->getAllSchema($table);
-        $ignore_field = array();
         $data_noise = $data;
         $update_one = false;
-        if ($old_data) {
-            if (count($old_data)) {
-                $data = array_merge($old_data, $data);
-            }
+
+        /* Nếu update thì merge old data */
+        if (!empty($old_data)) {
+            $data = array_merge($old_data, $data);
         }
-        $_where = array();
+
+        /* Where keys */
+        $_where = [];
         if ($where) {
             $this->where = $where;
             foreach ($this->where as $item) {
@@ -1479,65 +1488,44 @@ class Database
                 $_where[] = $item[1];
             }
         }
-        $pri = null;
-        if ($fields) {
-            foreach ($fields as $k => $v) {
-                if ($v['COLUMN_KEY'] == 'PRI') {
-                    $pri[] = $k;
-                    if (in_array($k, $_where)) {
+
+        $pri = [];
+
+        if (!empty($fields)) {
+            foreach ($fields as $col => $info) {
+
+                /* Xử lý PRIMARY KEY */
+                if ($info['COLUMN_KEY'] == 'PRI') {
+                    $pri[] = $col;
+                    if (in_array($col, $_where)) {
                         $update_one = true;
                     }
+                    // PK không bao giờ được fill → bỏ qua
+                    unset($data[$col]);
+                    continue;
                 }
-                if ($v['COLUMN_KEY'] != 'PRI' && isset($data[$k])) {
-                    $value = $data[$k];
-                    if (!$value) {
-                        $_type = $v['DATA_TYPE'];
-                        if (strpos($_type, 'int') !== false || strpos($_type, 'float') !== false || strpos($_type, 'double') !== false) {
-                            $value = 0;
-                        }
-                        if ($_type == 'date') {
-                            $value = '0000-00-00';
-                        }
-                        if ($_type == 'datetime') {
-                            $value = '0000-00-00 00:00:00';
-                        }
-                        if ($_type == 'timestamp') {
-                            $value = 'CURRENT_TIMESTAMP';
-                        }
+
+                /* Nếu cột có trong $data */
+                if (array_key_exists($col, $data)) {
+
+                    // Nếu giá trị rỗng ("", null) → để NULL hoàn toàn
+                    if ($data[$col] === "" || $data[$col] === null) {
+                        $data[$col] = null;
                     }
-                    $data[$k] = $value;
+
                 } else {
-                    $_type = $v['DATA_TYPE'];
-                    $value = "";
-                    if (strpos($_type, 'int') !== false || strpos($_type, 'float') !== false || strpos($_type, 'double') !== false) {
-                        $value = 0;
-                    }
-                    if ($_type == 'date') {
-                        $value = '0000-00-00';
-                    }
-                    if ($_type == 'datetime') {
-                        $value = '0000-00-00 00:00:00';
-                    }
-                    if ($_type == 'timestamp') {
-                        $value = 'CURRENT_TIMESTAMP';
-                    }
-                    if ($v['COLUMN_KEY'] != 'PRI') {
-                        $data[$k] = $value;
-                    }
+                
+                    continue;
                 }
             }
         }
-        if ($pri) {
-            if (count($pri)) {
-                foreach ($pri as $k => $v) {
-                    unset($data[$v]);
-                }
-            }
-        }
+
+        /* Restore data nếu UPDATE nhưng PK không nằm trong WHERE */
         if (!$update_one && $is_update) {
             $data = $data_noise;
         }
     }
+
     public function update($tableName, $tableData, $numRows = null)
     {
         global $loginAdmin;
@@ -1604,7 +1592,7 @@ class Database
     private function sendException($name, $errorNumber = '', $erroMessage = '', $sql = '')
     {
         // KHÔNG CÓ FILE exception.php, THAY THẾ BẰNG LOGIC IN LỖI TRỰC TIẾP
-        
+
         $output = "<!DOCTYPE html><html><head><title>Database Error</title><style>body{font-family: Arial, sans-serif; background-color: #f8f8f8; color: #333; margin: 20px;} h2{color: #cc0000;} pre{background-color: #eee; border: 1px solid #ddd; padding: 10px; overflow-x: auto;}</style></head><body>";
         $output .= "<h2>Database Error: {$name}</h2>";
         $output .= "<p><strong>Mã lỗi:</strong> {$errorNumber}</p>";
@@ -1613,7 +1601,7 @@ class Database
             $output .= "<p><strong>Truy vấn bị lỗi:</strong></p><pre>{$sql}</pre>";
         }
         $output .= "</body></html>";
-        
+
         return $output;
     }
     /* Create logs */
@@ -1623,22 +1611,31 @@ class Database
         if ($params) {
             $queryArr = explode("?", $query);
             foreach ($queryArr as $k => $v) {
-                if (!empty($params[$k])) $queryArr[$k] .= "'" . $params[$k] . "'";
+                if (!empty($params[$k]))
+                    $queryArr[$k] .= "'" . $params[$k] . "'";
                 $queryLogs .= $queryArr[$k];
             }
-        } else $queryLogs = $query;
+        } else
+            $queryLogs = $query;
         return $queryLogs;
     }
     public function getClientIP()
     {
         $ipaddress = '';
-        if (getenv('HTTP_CLIENT_IP')) $ipaddress = getenv('HTTP_CLIENT_IP');
-        else if (getenv('HTTP_X_FORWARDED_FOR')) $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-        else if (getenv('HTTP_X_FORWARDED')) $ipaddress = getenv('HTTP_X_FORWARDED');
-        else if (getenv('HTTP_FORWARDED_FOR')) $ipaddress = getenv('HTTP_FORWARDED_FOR');
-        else if (getenv('HTTP_FORWARDED')) $ipaddress = getenv('HTTP_FORWARDED');
-        else if (getenv('REMOTE_ADDR')) $ipaddress = getenv('REMOTE_ADDR');
-        else $ipaddress = 'UNKNOWN';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if (getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if (getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if (getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if (getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if (getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
         return $ipaddress;
     }
 }

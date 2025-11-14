@@ -49,10 +49,8 @@ $linkDelete = "index.php?com=product&act=delete&type=" . $type;
                         <?php if (isset($config['product'][$type]['show_images']) && $config['product'][$type]['show_images'] == true) { ?>
                             <th class="align-middle">Hình</th>
                         <?php } ?>
-                        <?php if (isset($config['product'][$type]['show_images2']) && $config['product'][$type]['show_images2'] == true) { ?>
-                            <th class="align-middle">Hình 2</th>
-                        <?php } ?>
-                        <th class="align-middle" style="width:30%">Tiêu đề</th>
+                  
+                        <th class="align-middle" style="width:30%">Tên sản phẩm</th>
                         <?php if (isset($config['product'][$type]['gallery']) && count($config['product'][$type]['gallery']) > 0) { ?>
                             <th class="align-middle">Gallery</th>
                         <?php } ?>
@@ -83,9 +81,6 @@ $linkDelete = "index.php?com=product&act=delete&type=" . $type;
                         <?php for ($i = 0; $i < count($items); $i++) {
                             $linkID = "";
                             if ($items[$i]['id_list']) $linkID .= "&id_list=" . $items[$i]['id_list'];
-                            if ($items[$i]['id_cat']) $linkID .= "&id_cat=" . $items[$i]['id_cat'];
-                            if ($items[$i]['id_item']) $linkID .= "&id_item=" . $items[$i]['id_item'];
-                            if ($items[$i]['id_sub']) $linkID .= "&id_sub=" . $items[$i]['id_sub'];
                             if ($items[$i]['id_brand']) $linkID .= "&id_brand=" . $items[$i]['id_brand']; ?>
                             <tr>
                                 <td class="align-middle">
@@ -99,20 +94,16 @@ $linkDelete = "index.php?com=product&act=delete&type=" . $type;
                                 </td>
                                 <?php if (isset($config['product'][$type]['show_images']) && $config['product'][$type]['show_images'] == true) { ?>
                                     <td class="align-middle">
-                                        <a href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['namevi'] ?>">
-                                            <?= $func->getImage(['class' => 'rounded img-preview', 'sizes' => $config['product'][$type]['thumb'], 'upload' => UPLOAD_PRODUCT_L, 'image' => $items[$i]['photo'], 'alt' => $items[$i]['namevi']]) ?>
+                                        <a href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['name'] ?>">
+
+                                            <img src="<?=UPLOAD_PRODUCT_L.$items[$i]['photo']?>" onerror="this.src='extensions/images/noimage.png'" class="rounded img-preview" alt="">
+                                        
                                         </a>
                                     </td>
                                 <?php } ?>
-                                <?php if (isset($config['product'][$type]['show_images2']) && $config['product'][$type]['show_images2'] == true) { ?>
-                                    <td class="align-middle">
-                                        <a href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['namevi'] ?>">
-                                            <?= $func->getImage(['class' => 'rounded img-preview', 'sizes' => $config['product'][$type]['thumb2'], 'upload' => UPLOAD_PRODUCT_L, 'image' => $items[$i]['photo2'], 'alt' => $items[$i]['namevi']]) ?>
-                                        </a>
-                                    </td>
-                                <?php } ?>
+                               
                                 <td class="align-middle">
-                                    <a class="text-dark text-break" href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['namevi'] ?>"><?= $items[$i]['namevi'] ?></a>
+                                    <a class="text-dark text-break" href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['name'] ?>"><?= $items[$i]['name'] ?></a>
                                 </td>
                                 <?php if (isset($config['product'][$type]['gallery']) && count($config['product'][$type]['gallery']) > 0) { ?>
                                     <td class="align-middle">
