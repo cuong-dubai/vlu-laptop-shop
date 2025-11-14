@@ -129,9 +129,9 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                             /* Photo detail */
                             $photoDetail = array();
                             $photoDetail['upload'] = '';
-                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? $item['photo'] : '';
+                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? UPLOAD_PRODUCT.$item['photo'] : '';
                             $photoDetail['dimension'] = "Width: " . $config['product'][$type]['width'] . " px - Height: " . $config['product'][$type]['height'] . " px (" . $config['product'][$type]['img_type'] . ")";
-
+                            
                             /* Image */
                             include TEMPLATE . LAYOUT . "image.php";
                             ?>

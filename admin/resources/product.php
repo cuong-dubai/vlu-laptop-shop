@@ -41,6 +41,9 @@ switch ($act) {
         viewProduct();
         $template = "product/man/mans";
         break;
+    case "edit":
+        editMan();
+        $template = "product/man/man_add";
     case "add":
         $template = "product/man/man_add";
         break;
@@ -50,6 +53,7 @@ switch ($act) {
     default:
         $template = "404";
 }
+
 /* ew man */
 function viewProduct()
 {
@@ -75,6 +79,21 @@ function viewProduct()
     $total = (!empty($count)) ? $count['num'] : 0;
     $url = "index.php?com=product&act=man" . $strUrl . "&type=" . $type;
     $paging = $func->pagination($total, $perPage, $curPage, $url);
+}
+function editMan()
+{
+    global $d, $func, $strUrl, $curPage, $item, $gallery, $type, $com, $act;
+    if (!empty($_GET['id'])) $id = htmlspecialchars($_GET['id']);
+    else if (!empty($_GET['id_copy'])) $id = htmlspecialchars($_GET['id_copy']);
+    else $id = 0;
+    if (empty($id)) {
+        $func->transfer("Không nhận được dữ liệu", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+    } else {
+        $item = $d->rawQueryOne("select * from #_product where id = ? and type = ? limit 0,1", array($id, $type));
+        if (empty($item)) {
+            $func->transfer("Dữ liệu không có thực", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+        } 
+    }
 }
 function saveProduct()
 {
@@ -211,8 +230,6 @@ function saveProduct()
         }
     }
 
-    /* --- INSERT OR UPDATE --- */
-
     if ($id && $act != 'save_copy') {
         /* UPDATE */
         $data['date_updated'] = time();
@@ -235,10 +252,10 @@ function saveProduct()
                 }
             }
 
-            if ($savehere)
-                $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id);
-            else
-                $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl);
+            // if ($savehere)
+            //     $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id);
+            // else
+            //     $func->transfer("Cập nhật dữ liệu thành công", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl);
         } else {
             $func->transfer("Cập nhật dữ liệu bị lỗi", "index.php?com=product&act=edit&type=" . $type . "&p=" . $curPage . $strUrl . "&id=" . $id, false);
         }
