@@ -16,7 +16,7 @@ if (isset($config['product'])) {
 }
 /* Cấu hình đường dẫn trả về */
 $strUrl = "";
-$arrUrl = array('id_list', 'id_cat', 'id_item', 'id_sub', 'id_brand');
+$arrUrl = array('id_list','id_brand');
 if (isset($_POST['data'])) {
     $dataUrl = isset($_POST['data']) ? $_POST['data'] : null;
     if ($dataUrl) {
@@ -30,8 +30,6 @@ if (isset($_POST['data'])) {
         if (isset($_REQUEST[$arrUrl[$k]]))
             $strUrl .= "&" . $arrUrl[$k] . "=" . htmlspecialchars($_REQUEST[$arrUrl[$k]]);
     }
-    if (!empty($_REQUEST['comment_status']))
-        $strUrl .= "&comment_status=" . htmlspecialchars($_REQUEST['comment_status']);
     if (isset($_REQUEST['keyword']))
         $strUrl .= "&keyword=" . htmlspecialchars($_REQUEST['keyword']);
 }
@@ -41,15 +39,22 @@ switch ($act) {
         viewProduct();
         $template = "product/man/mans";
         break;
+    case "edit":
+        editMan();
+        $template = "product/man/man_add";
     case "add":
         $template = "product/man/man_add";
         break;
     case "save":
         saveProduct();
         break;
+    case "delete":
+        deleteMan();
+        break;
     default:
         $template = "404";
 }
+
 /* ew man */
 function viewProduct()
 {
@@ -63,7 +68,7 @@ function viewProduct()
         $where .= " and id_brand=$idbrand";
     if (isset($_REQUEST['keyword'])) {
         $keyword = htmlspecialchars($_REQUEST['keyword']);
-        $where .= " and (namevi LIKE '%$keyword%' or nameen LIKE '%$keyword%')";
+        $where .= " and (name LIKE '%$keyword%')";
     }
     $perPage = 10;
     $startpoint = ($curPage * $perPage) - $perPage;
@@ -75,6 +80,24 @@ function viewProduct()
     $total = (!empty($count)) ? $count['num'] : 0;
     $url = "index.php?com=product&act=man" . $strUrl . "&type=" . $type;
     $paging = $func->pagination($total, $perPage, $curPage, $url);
+}
+function editMan()
+{
+    global $d, $func, $strUrl, $curPage, $item, $gallery, $type, $com, $act;
+    if (!empty($_GET['id']))
+        $id = htmlspecialchars($_GET['id']);
+    else if (!empty($_GET['id_copy']))
+        $id = htmlspecialchars($_GET['id_copy']);
+    else
+        $id = 0;
+    if (empty($id)) {
+        $func->transfer("Không nhận được dữ liệu", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+    } else {
+        $item = $d->rawQueryOne("select * from #_product where id = ? and type = ? limit 0,1", array($id, $type));
+        if (empty($item)) {
+            $func->transfer("Dữ liệu không có thực", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+        }
+    }
 }
 function saveProduct()
 {
@@ -211,8 +234,6 @@ function saveProduct()
         }
     }
 
-    /* --- INSERT OR UPDATE --- */
-
     if ($id && $act != 'save_copy') {
         /* UPDATE */
         $data['date_updated'] = time();
@@ -278,5 +299,38 @@ function saveProduct()
         } else {
             $func->transfer("Lưu dữ liệu bị lỗi", "index.php?com=product&act=add&type=" . $type, false);
         }
+    }
+}
+/* Delete man */
+function deleteMan()
+{
+    global $d, $strUrl, $func, $curPage, $com, $type;
+    $id = (!empty($_GET['id'])) ? htmlspecialchars($_GET['id']) : 0;
+    if ($id) {
+        /* Lấy dữ liệu */
+        $row = $d->rawQueryOne("select id, photo from #_product where id = ? and type = ? limit 0,1", array($id, $type));
+        if (!empty($row)) {
+            /* Xóa chính */
+            $func->deleteFile(UPLOAD_PRODUCT . $row['photo']);
+            $d->rawQuery("delete from #_product where id = ?", array($id));
+            $func->transfer("Xóa dữ liệu thành công", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl);
+        } else {
+            $func->transfer("Xóa dữ liệu bị lỗi", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
+        }
+    } elseif (isset($_GET['listid'])) {
+        $listid = explode(",", $_GET['listid']);
+        for ($i = 0; $i < count($listid); $i++) {
+            $id = htmlspecialchars($listid[$i]);
+            /* Lấy dữ liệu */
+            $row = $d->rawQueryOne("select id, photo from #_product where id = ? and type = ? limit 0,1", array($id, $type));
+            if (!empty($row)) {
+                /* Xóa chính */
+                $func->deleteFile(UPLOAD_PRODUCT . $row['photo']);
+                $d->rawQuery("delete from #_product where id = ?", array($id));
+            }
+        }
+        $func->transfer("Xóa dữ liệu thành công", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl);
+    } else {
+        $func->transfer("Không nhận được dữ liệu", "index.php?com=product&act=man&type=" . $type . "&p=" . $curPage . $strUrl, false);
     }
 }

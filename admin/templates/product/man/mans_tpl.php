@@ -96,7 +96,7 @@ $linkDelete = "index.php?com=product&act=delete&type=" . $type;
                                     <td class="align-middle">
                                         <a href="<?= $linkEdit ?><?= $linkID ?>&id=<?= $items[$i]['id'] ?>" title="<?= $items[$i]['name'] ?>">
 
-                                            <img src="<?=UPLOAD_PRODUCT_L.$items[$i]['photo']?>" onerror="this.src='extensions/images/noimage.png'" class="rounded img-preview" alt="">
+                                            <img src="<?=UPLOAD_PRODUCT.$items[$i]['photo']?>" onerror="this.src='extensions/images/noimage.png'" class="rounded img-preview" alt="">
                                         
                                         </a>
                                     </td>

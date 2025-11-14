@@ -55,5 +55,6 @@ define('ROOT', str_replace(basename(__DIR__), '', __DIR__));
 define('ASSET', $http . $configUrl);
 define('ADMIN', 'admin');
 
+// var_dump(ROOT);
 /* Cấu hình upload */
 require_once LIB . "constant.php";

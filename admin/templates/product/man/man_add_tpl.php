@@ -62,7 +62,7 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                                 <div class="form-group">
                                     <label for="name">Tiêu đề:</label>
                                     <input type="text" class="form-control for-seo text-sm" name="data[name]"
-                                        id="name" placeholder="Tiêu đề"
+                                        id="namevi" placeholder="Tiêu đề"
                                         value="<?= (!empty($flash->has('name'))) ? $flash->get('name') : @$item['name'] ?>"
                                         required>
                                 </div>
@@ -129,9 +129,9 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                             /* Photo detail */
                             $photoDetail = array();
                             $photoDetail['upload'] = '';
-                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? $item['photo'] : '';
+                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? UPLOAD_PRODUCT.$item['photo'] : '';
                             $photoDetail['dimension'] = "Width: " . $config['product'][$type]['width'] . " px - Height: " . $config['product'][$type]['height'] . " px (" . $config['product'][$type]['img_type'] . ")";
-
+                            
                             /* Image */
                             include TEMPLATE . LAYOUT . "image.php";
                             ?>

@@ -7,9 +7,13 @@ $array_const = array('photo','user', 'product');
 
 /* Define - Create folders upload */
 if (!file_exists(ROOT . $upload_const)) {
-    mkdir(ROOT . $upload_const, 0777, true);
+    // mkdir(ROOT . $upload_const, 0777, true);
+    var_dump(mkdir(ROOT . $upload_const, 0777, true));
     chmod(ROOT . $upload_const, 0777);
 }
+
+
+
 
 /* Define - Create folders childs */
 if (file_exists(ROOT . $upload_const) && $array_const) {
