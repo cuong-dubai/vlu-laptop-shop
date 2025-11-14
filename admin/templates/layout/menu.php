@@ -51,9 +51,9 @@
                                             if ($com == 'product' && ($act == 'man_list' || $act == 'add_list' || $act == 'edit_list' || $kind == 'man_list') && $k == $_GET['type'])
                                                 $active = "active"; ?>
                                             <li class="nav-item <?= $none ?>"><a class="nav-link <?= $active ?>"
-                                                    href="index.php?com=product&act=man_list&type=<?= $k ?>" title="Danh mục cấp 1"><i
+                                                    href="index.php?com=product&act=man_list&type=<?= $k ?>" title="Danh mục sản phẩm"><i
                                                         class="nav-icon text-sm far fa-caret-square-right"></i>
-                                                    <p>Danh mục cấp 1</p>
+                                                    <p>Danh mục sản phẩm</p>
                                                 </a></li>
                                         <?php } ?>
 
