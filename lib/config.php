@@ -15,6 +15,9 @@ $config = array(
     ),
     'website' => array(
         'lang-doc' => 'vi',
+        'lang' => array(
+            'vi'=> 'Tiếng việt',
+        ),
         'secret' => 'vlu',
         'salt' => 'promax',
     ),

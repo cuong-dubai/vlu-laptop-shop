@@ -50,6 +50,67 @@ function login() {
         },
     });
 }
+function filterCategory(url) {
+	if ($('.filter-category').length > 0 && url != '') {
+		var id = '';
+		var value = 0;
+		$('.filter-category').each(function () {
+			id = $(this).attr('id');
+			if (id) {
+				value = parseInt($('#' + id).val());
+				if (value) {
+					url += '&' + id + '=' + value;
+				}
+			}
+		});
+	}
+	return url;
+}
+function notifyDialog(content = '', title = 'Thông báo', icon = 'fas fa-exclamation-triangle', type = 'blue') {
+	$.alert({
+		title: title,
+		icon: icon, // font awesome
+		type: type, // red, green, orange, blue, purple, dark
+		content: content, // html, text
+		backgroundDismiss: true,
+		animationSpeed: 600,
+		animation: 'zoom',
+		closeAnimation: 'scale',
+		typeAnimated: true,
+		animateFromElement: false,
+		autoClose: 'accept|3000',
+		escapeKey: 'accept',
+		buttons: {
+			accept: {
+				text: '<i class="fas fa-check align-middle mr-2"></i>Đồng ý',
+				btnClass: 'btn-blue btn-sm bg-gradient-primary'
+			}
+		}
+	});
+}
+/* Search */
+function doEnter(evt, obj, url) {
+	if (url == '') {
+		notifyDialog('Đường dẫn không hợp lệ');
+		return false;
+	}
+	if (evt.keyCode == 13 || evt.which == 13) {
+		onSearch(obj, url);
+	}
+}
+function onSearch(obj, url) {
+	if (url == '') {
+		notifyDialog('Đường dẫn không hợp lệ');
+		return false;
+	} else {
+		var keyword = $('#' + obj).val();
+		url = filterCategory(url);
+		if (keyword) {
+			url += '&keyword=' + encodeURI(keyword);
+		}
+		window.location = filterCategory(url);
+	}
+}
 
 
 

@@ -12372,8 +12372,8 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .content-wrapper,
 }
 
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active,[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus,[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
-    background-color: rgba(255,255,255,.9);
-    color: #343a40
+    background-color: rgb(0 0 0 / 42%);
+    color: #ffffff;
 }
 
 [class*=sidebar-dark-] .nav-flat .nav-item .nav-treeview .nav-treeview {

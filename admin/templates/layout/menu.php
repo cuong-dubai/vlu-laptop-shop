@@ -42,6 +42,7 @@
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                        
                                 <ul class="nav nav-treeview">
                                     <?php if (!empty($v['dropdown'])) {
                                         if (isset($v['list']) && $v['list'] == true) {
