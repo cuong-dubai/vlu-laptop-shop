@@ -19,7 +19,6 @@
         <input type="hidden" class="slug-copy" value="<?= (isset($copy) && $copy == true) ? 1 : 0 ?>">
 
         <div class="card card-primary card-outline card-outline-tabs">
-
             <div class="card-body">
                 <div class="form-gourp mb-0">
                     <label class="d-block">Đường dẫn mẫu:<span class="pl-2 font-weight-normal"
