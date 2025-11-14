@@ -19,11 +19,11 @@ $config['product'][$nametype]['height'] = 300;
 $config['product'][$nametype]['img_type'] = '.jpg|.gif|.png|.jpeg|.gif';
 
 /* Sản phẩm (List) */
-$config['product'][$nametype]['title_main_list'] = "Sản phẩm cấp 1";
-$config['product'][$nametype]['images_list'] = true;
+$config['product'][$nametype]['title_main_list'] = "danh mục sản phẩm";
+$config['product'][$nametype]['images_list'] = false;
 $config['product'][$nametype]['show_images_list'] = false;
 $config['product'][$nametype]['slug_list'] = true;
-$config['product'][$nametype]['check_list'] = array("noibat" => "Nổi bật", "hienthi" => "Hiển thị");
+$config['product'][$nametype]['check_list'] = array("hienthi" => "Hiển thị");
 $config['product'][$nametype]['check_all_list'] = false;
 $config['product'][$nametype]['desc_list'] = false;
 $config['product'][$nametype]['seo_list'] = true;
