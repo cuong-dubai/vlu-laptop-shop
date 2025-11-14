@@ -23,17 +23,17 @@
             <div class="card-body">
                 <div class="form-gourp mb-0">
                     <label class="d-block">Đường dẫn mẫu:<span class="pl-2 font-weight-normal"
-                            id="slugurlpreview<?= $k ?>"><?= $configBase ?><strong
+                            id="slugurlpreviewvi"><?= $configBase ?><strong
                                 class="text-info"><?= @$item['slug'] ?></strong></span></label>
-                    <input type="text" class="form-control slug-input no-validate text-sm" name="slug<?= $k ?>"
-                        id="slug<?= $k ?>" placeholder="Đường dẫn" value="<?= @$item['slug'] ?>"
+                    <input type="text" class="form-control slug-input no-validate text-sm" name="slug"
+                        id="slugvi" placeholder="Đường dẫn" value="<?= @$item['slug'] ?>"
                         required>
-                    <input type="hidden" id="slug-default<?= $k ?>" value="<?= @$item['slug'] ?>">
-                    <p class="alert-slug<?= $k ?> text-danger d-none mt-2 mb-0" id="alert-slug-danger<?= $k ?>">
+                    <input type="hidden" id="slug-defaultvi" value="<?= @$item['slug'] ?>">
+                    <p class="alert-slugvi text-danger d-none mt-2 mb-0" id="alert-slug-dangervi">
                         <i class="fas fa-exclamation-triangle mr-1"></i>
                         <span>Đường dẫn đã tồn tại. Đường dẫn truy cập mục này có thể bị trùng lặp.</span>
                     </p>
-                    <p class="alert-slug<?= $k ?> text-success d-none mt-2 mb-0" id="alert-slug-success<?= $k ?>">
+                    <p class="alert-slugvi text-success d-none mt-2 mb-0" id="alert-slug-successvi">
                         <i class="fas fa-check-circle mr-1"></i>
                         <span>Đường dẫn hợp lệ.</span>
                     </p>

@@ -5,4 +5,5 @@
     rel="stylesheet">
 <link href="extensions/fontawesome611/all.css" rel="stylesheet">
 <link href="extensions/css/boostrap.css" rel="stylesheet">
+<link href="extensions/confirm/confirm.css" rel="stylesheet">
 <link href="extensions/css/style.css" rel="stylesheet">

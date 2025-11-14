@@ -17,6 +17,7 @@
 </script>
 <script src="extensions/js/jquery.min.js"></script>
 <script src="extensions/js/bootstrap.js"></script>
+<script src="extensions/confirm/confirm.js"></script>
 <script src="extensions/js/default.js"></script>
 <script src="extensions/js/priceFormat.js"></script>
 <script src="extensions/js/app.js"></script>

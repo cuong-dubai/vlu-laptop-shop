@@ -62,7 +62,7 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                                 <div class="form-group">
                                     <label for="name">Tiêu đề:</label>
                                     <input type="text" class="form-control for-seo text-sm" name="data[name]"
-                                        id="name" placeholder="Tiêu đề"
+                                        id="namevi" placeholder="Tiêu đề"
                                         value="<?= (!empty($flash->has('name'))) ? $flash->get('name') : @$item['name'] ?>"
                                         required>
                                 </div>

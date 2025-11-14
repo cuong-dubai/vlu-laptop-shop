@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4 text-sm">
     <!-- Logo -->
     <a class="brand-link mt-2" href="index.php">
-        <img src="./extensions/images/logo_head.png" alt="" style="max-width:100px">
+        <img src="./extensions/images/logo_head.png" alt="" style="max-width:150px">
     </a>
 
     <!-- Sidebar -->
