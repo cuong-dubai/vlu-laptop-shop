@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 14, 2025 at 10:38 AM
+-- Generation Time: Nov 15, 2025 at 02:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -61,6 +61,15 @@ CREATE TABLE `categories` (
   `date_updated` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
+(2, 'laptop-gamming', NULL, NULL, 'Laptop Gamming', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128862, 1763128883),
+(3, 'laptop-van-ph', NULL, NULL, 'Laptop Văn Phòng', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128876, 0),
+(4, 'laptop-gia-re', NULL, NULL, 'Laptop Giá Rẻ', NULL, 1, 'hienthi', 'san-pham', 1763128896, 1763128930);
+
 -- --------------------------------------------------------
 
 --
@@ -92,7 +101,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `id_list`, `id_brand`, `photo`, `slug`, `content`, `desc`, `name`, `code`, `regular_price`, `discount`, `sale_price`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
-(12, NULL, NULL, NULL, 'dsaddsa', 'dád', 'dsdsdads', 'dsaddsa', NULL, 0, 0, 0, 1, 'hienthi', 'san-pham', 1763112063, 0);
+(13, 3, NULL, 'image-2420.png', 'laptop-hp-omen-16-am0127tx', 'Update nội dung sản phẩm\r\n', 'Update sản phẩm\r\n', 'Laptop HP Omen 16-am0127TX ', NULL, 0, 0, 0, 1, 'hienthi', 'san-pham', 1763126833, 1763129500);
 
 -- --------------------------------------------------------
 
@@ -127,7 +136,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `id_permission`, `username`, `password`, `confirm_code`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `user_token`, `lastlogin`, `status`, `role`, `secret_key`, `birthday`, `numb`) VALUES
-(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '37e476cf1a2a0223eb3fe32bb0d89052', '1763113068', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
+(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '3ad147fa69326cb90a9ceaa73bd0eaf2', '1763131364', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -173,13 +182,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
