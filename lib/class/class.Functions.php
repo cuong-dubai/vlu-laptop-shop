@@ -325,6 +325,32 @@ class Functions
         }
         return false;
     }
+        public function getAjaxCategory($table = '', $level = '', $type = '', $title_select = 'Chọn danh mục', $class_select = 'select-category')
+    {
+        $where = '';
+        $params = array($type);
+        $id_parent = 'id_' . $level;
+        $data_level = '';
+        $data_type = 'data-type="' . $type . '"';
+        $data_table = '';
+        $data_child = '';
+        if ($level == 'list') {
+            $data_level = 'data-level="0"';
+            $data_table = 'data-table="#_' . $table . '_cat"';
+            $data_child = 'data-child="id_cat"';
+        }
+        $rows = $this->d->rawQuery("select name, id from #_" . $table . " where type = ? " . $where . " order by numb,id desc", $params);
+        $str = '<select id="' . $id_parent . '" name="data[' . $id_parent . ']" ' . $data_level . ' ' . $data_type . ' ' . $data_table . ' ' . $data_child . ' class="form-control select2 ' . $class_select . '"><option value="0">' . $title_select . '</option>';
+        foreach ($rows as $v) {
+            if (isset($_REQUEST[$id_parent]) && ($v["id"] == (int) $_REQUEST[$id_parent]))
+                $selected = "selected";
+            else
+                $selected = "";
+            $str .= '<option value=' . $v["id"] . ' ' . $selected . '>' . $v["name"] . '</option>';
+        }
+        $str .= '</select>';
+        return $str;
+    }
     /* UTF8 convert */
     public function utf8Convert($str = '')
     {

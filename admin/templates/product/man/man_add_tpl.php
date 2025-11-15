@@ -107,7 +107,7 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                                     <?php if (isset($config['product'][$type]['list']) && $config['product'][$type]['list'] == true) { ?>
                                         <div class="form-group col-xl-6 col-sm-4">
                                             <label class="d-block" for="id_list">Danh mục cấp 1:</label>
-                                            
+                                            <?= $func->getAjaxCategory('categories', 'list', $type) ?>
                                         </div>
                                     <?php } ?>
 
