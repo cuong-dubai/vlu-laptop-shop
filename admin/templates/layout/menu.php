@@ -42,7 +42,7 @@
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                        
+
                                 <ul class="nav nav-treeview">
                                     <?php if (!empty($v['dropdown'])) {
                                         if (isset($v['list']) && $v['list'] == true) {
@@ -56,16 +56,29 @@
                                                     <p>Danh mục sản phẩm</p>
                                                 </a></li>
                                         <?php } ?>
+                                        <?php if (isset($v['brand']) && $v['brand'] == true) {
+                                            $none = "";
+                                            $active = "";
+                                            if ($com == 'product' && ($act == 'man_brand' || $act == 'add_brand' || $act == 'edit_brand') && $k == $_GET['type'])
+                                                $active = "active"; ?>
+                                            <li class="nav-item <?= $none ?>"><a class="nav-link <?= $active ?>"
+                                                    href="index.php?com=product&act=man_brand&type=<?= $k ?>" title="Danh mục hãng"><i
+                                                        class="nav-icon text-sm far fa-caret-square-right"></i>
+                                                    <p>Danh mục hãng</p>
+                                                </a></li>
+                                        <?php } ?>
 
                                         <?php
-                                    $none = "";
-                                    $active = "";
-                                    if (isset($is_permission) && $is_permission == true) if ($func->checkPermission('product', 'man', $k, null, 'phrase-1')) $none = "d-none";
-                                    if ($com == 'product' && ($act == 'man' || $act == 'add' || $act == 'edit' || $act == 'copy' || $kind == 'man') && $k == $_GET['type']) $active = "active";
-                                    ?>
-                                    <li class="nav-item <?= $none ?>"><a class="nav-link <?= $active ?>" href="index.php?com=product&act=man&type=<?= $k ?>" title="<?= $v['title_main'] ?>"><i class="nav-icon text-sm far fa-caret-square-right"></i>
-                                            <p><?= $v['title_main'] ?></p>
-                                        </a></li>
+                                        $none = "";
+                                        $active = "";
+                                        if ($com == 'product' && ($act == 'man' || $act == 'add' || $act == 'edit' || $act == 'copy' || $kind == 'man') && $k == $_GET['type'])
+                                            $active = "active";
+                                        ?>
+                                        <li class="nav-item <?= $none ?>"><a class="nav-link <?= $active ?>"
+                                                href="index.php?com=product&act=man&type=<?= $k ?>" title="<?= $v['title_main'] ?>"><i
+                                                    class="nav-icon text-sm far fa-caret-square-right"></i>
+                                                <p><?= $v['title_main'] ?></p>
+                                            </a></li>
                                     <?php }
                         } ?>
 
