@@ -49,6 +49,8 @@ $configBase = $http . $configUrl;
 
 define('TOKEN', md5($config['database']['url']));
 $loginAdmin = $config['login']['admin'];
+$loginMember = $config['login']['member'];
+
 
 
 define('ROOT', str_replace(basename(__DIR__), '', __DIR__));
