@@ -32,15 +32,10 @@ $router->map('GET|POST', '', 'index', 'home');
 
 $router->map('GET|POST', 'index.php', 'index', 'index');
 
-$router->map('GET|POST', 'sitemap.xml', 'sitemap', 'sitemap');
-
 $router->map('GET|POST', '[a:com]', 'allpage', 'show');
-
-$router->map('GET|POST', '[a:com]/[a:lang]/', 'allpagelang', 'lang');
 
 $router->map('GET|POST', '[a:com]/[a:action]', 'account', 'account');
 
-$router->map('GET|POST', '[a:com]/[a:lock]', 'lock', 'lock');
 
 $match = $router->match();
 
@@ -113,6 +108,33 @@ if (!empty($com) && !in_array($com, ['tim-kiem', 'account'])) {
 
 
 switch ($com) {
+    case "gioi-thieu":
+        $source = "static";
+        $type = $com;
+        $titleMain = "Giới thiệu";
+        $template = "static/static";
+        break;
+    case "lien-he":
+        $source = "static";
+        $type = $com;
+        $titleMain = "Liên hệ";
+        $template = "static/static";
+        break;
+    case "blog":
+        $source = "news";
+        $type = $com;
+        $titleMain = "Tin tức";
+        $template = "static/static";
+        break;
+    case "gio-hang":
+        $source = "order";
+        $type = $com;
+        $titleMain = "Giỏ hàng";
+        $template = "order/order";
+        break;
+    case 'account':
+        $source = "user";
+        break;
     case "san-pham":
         $source = "product";
         $type = $com;
