@@ -1,6 +1,7 @@
 <?php
 session_start();
 define('LIB', './lib/');
+define('SOURCES', './resources/');
 define('LAYOUT', 'layout/');
 
 require_once LIB . "config.php";
