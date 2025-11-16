@@ -79,6 +79,8 @@ if (is_array($match)) {
 switch ($com) {
     case "san-pham":
         $source = "product";
+        $type = $com;
+        $titleMain = "Sản phẩm";
         $template = "product/product";
         break;
 

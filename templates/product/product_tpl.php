@@ -1,1 +1,8 @@
-SẢN PHẨM
+<div class="wrap-content">
+    <div class="title-main">
+        <h2><?= (!empty($titleCate)) ? $titleCate : @$titleMain ?></h2>
+    </div>
+    <div class="list-product">
+        <?php echo $func->GetProducts($product) ?>
+    </div>
+</div>
