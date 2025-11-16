@@ -1,15 +1,21 @@
+<?php
 
-<?php 
-
-if ($act == "add") $labelAct = "Thêm mới";
-else if ($act == "edit") $labelAct = "Chỉnh sửa";
-else if ($act == "copy")  $labelAct = "Sao chép";
+if ($act == "add")
+    $labelAct = "Thêm mới";
+else if ($act == "edit")
+    $labelAct = "Chỉnh sửa";
+else if ($act == "copy")
+    $labelAct = "Sao chép";
 
 $linkMan = "index.php?com=product&act=man&type=" . $type;
-if ($act == 'add') $linkFilter = "index.php?com=product&act=add&type=" . $type;
-else if ($act == 'edit') $linkFilter = "index.php?com=product&act=edit&type=" . $type . "&id=" . $id;
-if ($act == "copy") $linkSave = "index.php?com=product&act=save_copy&type=" . $type;
-else $linkSave = "index.php?com=product&act=save&type=" . $type;
+if ($act == 'add')
+    $linkFilter = "index.php?com=product&act=add&type=" . $type;
+else if ($act == 'edit')
+    $linkFilter = "index.php?com=product&act=edit&type=" . $type . "&id=" . $id;
+if ($act == "copy")
+    $linkSave = "index.php?com=product&act=save_copy&type=" . $type;
+else
+    $linkSave = "index.php?com=product&act=save&type=" . $type;
 ?>
 
 <!-- Content Header -->
@@ -69,9 +75,7 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                                 <?php if (isset($config['product'][$type]['desc']) && $config['product'][$type]['desc'] == true) { ?>
                                     <div class="form-group">
                                         <label for="desc">Mô tả:</label>
-                                        <textarea
-                                            class="form-control for-seo text-sm"
-                                            name="data[desc]" id="desc" rows="5"
+                                        <textarea class="form-control for-seo text-sm" name="data[desc]" id="desc" rows="5"
                                             placeholder="Mô tả"><?= $func->decodeHtmlChars($flash->get('desc')) ?: $func->decodeHtmlChars(@$item['desc']) ?></textarea>
                                     </div>
                                 <?php } ?>
@@ -106,10 +110,14 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                                 <?php if (isset($config['product'][$type]['dropdown']) && $config['product'][$type]['dropdown'] == true) { ?>
                                     <?php if (isset($config['product'][$type]['list']) && $config['product'][$type]['list'] == true) { ?>
                                         <div class="form-group col-xl-6 col-sm-4">
-                                            <label class="d-block" for="id_list">Danh mục cấp 1:</label>
+                                            <label class="d-block" for="id_list">Danh mục sản phẩm:</label>
                                             <?= $func->getAjaxCategory('categories', 'list', $type) ?>
                                         </div>
                                     <?php } ?>
+                                    <div class="form-group col-xl-6 col-sm-4">
+                                        <label class="d-block" for="id_brand">Danh mục hãng:</label>
+                                        <?= $func->getAjaxCategory('brand', 'brand', $type, 'Chọn hãng') ?>
+                                    </div>
 
                                 <?php } ?>
                             </div>
@@ -121,7 +129,8 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                         <div class="card-header">
                             <h3 class="card-title">Hình ảnh <?= $config['product'][$type]['title_main'] ?></h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-minus"></i></button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -129,9 +138,9 @@ else $linkSave = "index.php?com=product&act=save&type=" . $type;
                             /* Photo detail */
                             $photoDetail = array();
                             $photoDetail['upload'] = '';
-                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? UPLOAD_PRODUCT.$item['photo'] : '';
+                            $photoDetail['image'] = (!empty($item) && $act != 'copy') ? UPLOAD_PRODUCT . $item['photo'] : '';
                             $photoDetail['dimension'] = "Width: " . $config['product'][$type]['width'] . " px - Height: " . $config['product'][$type]['height'] . " px (" . $config['product'][$type]['img_type'] . ")";
-                            
+
                             /* Image */
                             include TEMPLATE . LAYOUT . "image.php";
                             ?>

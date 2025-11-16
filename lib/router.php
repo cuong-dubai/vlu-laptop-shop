@@ -1,6 +1,5 @@
-
 <?php
- define('TEMPLATE', './templates/');
+define('TEMPLATE', './templates/');
 
 /* Router */
 
@@ -104,7 +103,10 @@ switch ($com) {
         exit();
 
 }
-
+/* Include sources */
+if (!empty($source)) {
+    include SOURCES . $source . ".php";
+}
 if (empty($template)) {
 
     header('HTTP/1.0 404 Not Found', true, 404);
