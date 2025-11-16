@@ -4,6 +4,7 @@ $nametype = "san-pham";
 $config['product'][$nametype]['title_main'] = "Sản Phẩm";
 $config['product'][$nametype]['dropdown'] = true;
 $config['product'][$nametype]['list'] = true;
+$config['product'][$nametype]['brand'] = true;
 $config['product'][$nametype]['slug'] = true;
 $config['product'][$nametype]['images'] = true;
 $config['product'][$nametype]['desc'] = true;
@@ -34,3 +35,12 @@ $config['product'][$nametype]['img_type_list'] = '.jpg|.gif|.png|.jpeg|.gif';
 
 
 
+$config['product'][$nametype]['title_main_brand'] = "Hãng sản phẩm";
+$config['product'][$nametype]['images_brand'] = false;
+$config['product'][$nametype]['show_images_brand'] = false;
+$config['product'][$nametype]['slug_brand'] = true;
+$config['product'][$nametype]['check_brand'] = array("hienthi" => "Hiển thị");
+$config['product'][$nametype]['width_brand'] = 150;
+$config['product'][$nametype]['height_brand'] = 150;
+$config['product'][$nametype]['thumb_brand'] = '100x100x1';
+$config['product'][$nametype]['img_type_brand'] = '.jpg|.gif|.png|.jpeg|.gif';
