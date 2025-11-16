@@ -83,6 +83,7 @@ switch ($com) {
         break;
 
     case '':
+    case 'trang-chu':
     case 'index':
 
         $source = "index";

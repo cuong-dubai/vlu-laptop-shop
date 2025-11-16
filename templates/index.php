@@ -12,8 +12,7 @@
             <?php 
                 include TEMPLATE . LAYOUT . "header.php";
                 include TEMPLATE . LAYOUT . "menu.php";
-                include TEMPLATE . LAYOUT . "slide.php";
-                
+                if($com == 'index') include TEMPLATE . LAYOUT . "slide.php";
             ?>
             <div class="w-clear">
 

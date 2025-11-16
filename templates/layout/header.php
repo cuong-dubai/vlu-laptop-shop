@@ -8,7 +8,7 @@
     <div class="wrap-content">
         <div class="header__middle">
             <div class="header__middle--logo">
-                <img src="assets/images/logo_head.png" width="124" height="90" alt="Logo Header">
+                <a href=""><img src="assets/images/logo_head.png" width="124" height="90" alt="Logo Header"></a>
             </div>
             <div class="header__middle--search">
                 <div class="search w-clear">

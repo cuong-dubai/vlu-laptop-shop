@@ -34,7 +34,7 @@
                 </li>
                 <li class="primary-menu-default">
 
-                    <a class="" href="trang-chu">Trang chủ</a>
+                    <a class="" href="">Trang chủ</a>
 
 
 
