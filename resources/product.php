@@ -35,7 +35,7 @@ if ($id != '') {
     /* Lấy cấp 1 detail */
     $productList = $d->rawQueryOne("select * from #_categories where id = ? and type = ? limit 0,1", array($idl, $type));
     /* SEO */
-    $titleCate = $productList['name' . $lang];
+    $titleCate = $productList['name'];
    
     /* Lấy sản phẩm */
     $where = "";

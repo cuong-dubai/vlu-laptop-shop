@@ -29,9 +29,9 @@ body{min-height:100vh;font-weight:400;font-size:16px;line-height:1}
 .menu ul li a.has-child::after{content:"";position:absolute;bottom:calc(50% - 2px);right:5px;width:5px;height:5px;border:1px solid #fafafa;border-top:0;border-left:0;transform:rotate(45deg);transition:all .3s ease-out}
 .menu ul li a.active.has-child:after,.menu ul li:hover>a.has-child:after{color:#1e4071}
 .menu ul li ul{position:absolute;min-width:250px;background-color:#fafafa;border-radius:.25rem;box-shadow:1px 1px 15px rgba(0,0,0,.15);transform-origin:0 0 0;opacity:0;visibility:hidden;transition:all .5s;top:0}
-.menu ul li:hover>ul{opacity:1;visibility:visible;transition:all .5s;top:63px}
+.menu ul li:hover>ul{opacity:1;visibility:visible;transition:all .5s;top: 48px;}
 .menu ul li ul li{padding-left:.75rem;padding-right:.75rem}
-.menu ul li ul li a{border-bottom:1px solid #ececec;color:#1e1e1e;text-align:left;font-family:SVN-Gilroy;font-size:16px;font-style:normal;font-weight:500;line-height:normal;text-transform:capitalize}
+.menu ul li ul li a{border-bottom:1px solid #ececec;color:#1e1e1e;text-align:left;font-family: 'Roboto';font-size:16px;font-style:normal;font-weight:500;line-height:normal;text-transform:capitalize}
 .menu ul li ul li:last-child>a{border-bottom:0}
 .menu ul li ul li a.has-child{margin-right:0}
 .menu ul li ul li a.has-child:after{border-color:#313131;transform:rotate(-45deg)}

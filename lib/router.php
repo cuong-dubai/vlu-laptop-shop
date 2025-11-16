@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 define('TEMPLATE', './templates/');
 
 /* Router */
@@ -48,6 +51,8 @@ $com = '';
 $source = '';
 $template = '';
 
+
+
 if (is_array($match)) {
 
     if (is_callable($match['target'])) {
@@ -73,6 +78,37 @@ if (is_array($match)) {
 }
 
 
+/* Tối ưu link */
+$requick = array(
+    /* Sản phẩm */
+    array("tbl" => "categories", "field" => "idl", "source" => "product", "com" => "san-pham", "type" => "san-pham"),
+    array("tbl" => "brand", "field" => "idb", "source" => "product", "com" => "thuong-hieu", "type" => "san-pham"),
+    array("tbl" => "product", "field" => "id", "source" => "product", "com" => "san-pham", "type" => "san-pham", "menu" => true),
+
+);
+
+
+
+/* Find data */
+if (!empty($com) && !in_array($com, ['tim-kiem', 'account'])) {
+    foreach ($requick as $k => $v) {
+        $urlTbl = (!empty($v['tbl'])) ? $v['tbl'] : '';
+        $urlTblTag = (!empty($v['tbltag'])) ? $v['tbltag'] : '';
+        $urlType = (!empty($v['type'])) ? $v['type'] : '';
+        $urlField = (!empty($v['field'])) ? $v['field'] : '';
+        $urlCom = (!empty($v['com'])) ? $v['com'] : '';
+
+        if (!empty($urlTbl) && !in_array($urlTbl, ['static', 'photo'])) {
+            $row = $d->rawQueryOne("select id from #_$urlTbl where slug = ? and type = ? and find_in_set('hienthi',status) limit 0,1", array($com, $urlType));
+
+            if (!empty($row['id'])) {
+                $_GET[$urlField] = $row['id'];
+                $com = $urlCom;
+                break;
+            }
+        }
+    }
+}
 
 
 
@@ -106,6 +142,8 @@ switch ($com) {
         exit();
 
 }
+/* Require datas for all page */
+require_once SOURCES . "allpage.php";
 /* Include sources */
 if (!empty($source)) {
     include SOURCES . $source . ".php";
