@@ -14,7 +14,7 @@
                 include TEMPLATE . LAYOUT . "menu.php";
                 if($com == 'index') include TEMPLATE . LAYOUT . "slide.php";
             ?>
-            <div class="w-clear">
+            <div class="w-clear <?= ($source != 'index') ? 'wrap-detail' : '' ?>">
 
                 <?php include TEMPLATE . $template . "_tpl.php"; ?>
 
