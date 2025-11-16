@@ -43,7 +43,7 @@ else
                     class="fas fa-sign-out-alt mr-2"></i>Thoát</a>
         </div>
 
-
+        <?= $flash->getMessages('admin') ?>
 
         <div class="row">
             <div class="col-xl-8">
