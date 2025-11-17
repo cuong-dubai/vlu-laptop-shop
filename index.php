@@ -19,6 +19,10 @@ $css = new CssMinify(true, $func);
 $cartHelper   = new CartHelper(new Product($d));
 $cartTotalQty = $cartHelper->getTotalQty();
 
+// Khởi tạo CartHelper để hiển thị số lượng sản phẩm trong giỏ trên header/menu
+$cartHelper   = new CartHelper(new Product($d));
+$cartTotalQty = $cartHelper->getTotalQty();
+
 
 
 
