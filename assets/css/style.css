@@ -327,3 +327,21 @@ p {
 .container.frefix__user__info__container .col-md-3{background: #000000;padding-right:0;padding-left:0}
 .frefix__user__info__list-group .list-group-item:hover{background:#ffffff3d;transition:all .3s linear}
 a.list-group-item.list-group-item-action.active:hover{color:#fff}
+
+h2.font-weight-bold.mb-3.title-product-detail {
+    font-size: 20px;
+}
+h4.font-weight-bold.mb-3.priceDetail_product {
+    font-size: 20px;
+}
+
+h4.font-weight-bold.mb-3.priceDetail_product {
+    color: red !IMPORTANT;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem 0 2rem 0 !IMPORTANT;
+}
+.product-image.text-center.p-3.border.rounded {
+    background: #fff;
+}
