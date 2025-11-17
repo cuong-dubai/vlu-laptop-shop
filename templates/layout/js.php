@@ -4,6 +4,7 @@
 
 <?php 
     $js->set("js/jquery.min.js");
+    $js->set("bootstrap/bootstrap.css");
     $js->set("slick/slick.js");
     $js->set("js/app.js");
     echo $js -> get();
