@@ -1,4 +1,4 @@
-<div class="wrap-content py-4 bg-light">
+<div class="wrap-content py-4 bg-light my-4">
     <div class="container">
         <div class="title-main mb-4">
             <h2><?= (!empty($titleCate)) ? $titleCate : @$titleMain ?></h2>

@@ -31,22 +31,4 @@ $currentType = isset($type) ? $type : '';
             <p>Email: Huy.2274802010328@vanlanguni.vn</p>
         </div>
     <?php } ?>
-
-    <?php if ($currentType === 'blog') { ?>
-        <div class="news-links mt-4">
-            <h3 class="mb-3">Các Tin tức Laptop</h3>
-            <ul class="list-unstyled">
-                <li class="mb-2">
-                    <a href="https://vnexpress.net/tag/laptop-5258" target="_blank" rel="noopener noreferrer" class="text-primary">
-                        https://vnexpress.net/tag/laptop-5258
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="https://www.thegioididong.com/tin-tuc/laptop/1269" target="_blank" rel="noopener noreferrer" class="text-primary">
-                        https://www.thegioididong.com/tin-tuc/laptop/1269
-                    </a>
-                </li>
-            </ul>
-        </div>
-    <?php } ?>
 </div>

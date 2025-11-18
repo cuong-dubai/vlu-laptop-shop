@@ -36,7 +36,6 @@ $router->map('GET|POST', '[a:com]', 'allpage', 'show');
 
 $router->map('GET|POST', '[a:com]/[a:action]', 'account', 'account');
 
-$router->map('GET|POST', 'blog/[a:slug]', 'news', 'blog-detail');
 
 
 $match = $router->match();
@@ -59,11 +58,7 @@ if (is_array($match)) {
     } else {
 
         $com = (!empty($match['params']['com'])) ? htmlspecialchars($match['params']['com']) : htmlspecialchars($match['target']);
-        
-        // Xử lý route đặc biệt blog-detail
-        if ($match['name'] === 'blog-detail') {
-            $com = 'blog-detail';
-        }
+
 
         $getPage = !empty($_GET['p']) ? htmlspecialchars($_GET['p']) : 1;
 
@@ -86,6 +81,7 @@ $requick = array(
     array("tbl" => "categories", "field" => "idl", "source" => "product", "com" => "san-pham", "type" => "san-pham"),
     array("tbl" => "brand", "field" => "idb", "source" => "product", "com" => "thuong-hieu", "type" => "san-pham"),
     array("tbl" => "product", "field" => "id", "source" => "product", "com" => "san-pham", "type" => "san-pham", "menu" => true),
+    array("tbl" => "news", "field" => "id", "source" => "news", "com" => "blog", "type" => "tin-tuc", "menu" => true),
 
 );
 
@@ -131,16 +127,7 @@ switch ($com) {
         $source = "news";
         $type = $com;
         $titleMain = "Tin tức";
-        $template = "static/static";
-        break;
-    case "blog-detail":
-        $source = "news";
-        $type = "blog";
-        // Lấy slug từ params
-        if (!empty($match['params']['slug'])) {
-            $_GET['slug'] = htmlspecialchars($match['params']['slug']);
-        }
-        $template = "blog/detail";
+        $template = isset($_GET['id']) ? "news/news_detail" : "news/news";
         break;
     case "gio-hang":
         $source = "order";

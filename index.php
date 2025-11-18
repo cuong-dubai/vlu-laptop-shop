@@ -25,5 +25,4 @@ $js = new JsMinify(true, $func);
 require_once LIB . "router.php";
 include TEMPLATE . "index.php";
 
-
 ?>

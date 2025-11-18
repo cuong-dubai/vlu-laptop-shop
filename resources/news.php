@@ -5,19 +5,15 @@ if (!defined('SOURCES')) {
 
 $newsModel = new News($d);
 $newsDetail = null;
-
-// Kiểm tra nếu có slug trong URL (xem chi tiết bài viết)
-if (!empty($_GET['slug'])) {
-    $slug = htmlspecialchars($_GET['slug']);
+if (!empty($_GET['id'])) {
+    $slug = htmlspecialchars($_GET['id']);
     
-    // Tìm bài viết theo slug
-    $d->where('slug', $slug);
+    $d->where('id', $slug);
     $newsDetail = $d->getOne('news');
     
     if ($newsDetail) {
         $titleMain = $newsDetail['name'] ?? 'Chi tiết tin tức';
     } else {
-        // Không tìm thấy bài viết
         $newsDetail = null;
     }
 } else {
