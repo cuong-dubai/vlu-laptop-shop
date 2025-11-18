@@ -27,6 +27,7 @@
                                         <th>Giá</th>
                                         <th>Số lượng</th>
                                         <th>Tạm tính</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,10 +54,28 @@
                                             <td class="align-middle">
                                                 <?= number_format((float)$item['price'] * (int)$item['qty'], 0, ',', '.') ?>đ
                                             </td>
+                                            <td class="align-middle text-right">
+                                                <form method="post" class="d-inline-block">
+                                                    <input type="hidden" name="cart_action" value="remove_item">
+                                                    <input type="hidden" name="product_id" value="<?= (int)$item['id'] ?>">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Xoá sản phẩm">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-between align-items-center px-3 py-3 border-top">
+                                <a class="btn btn-link" href="<?= $configBase ?>">Tiếp tục mua sắm</a>
+                                <form method="post" class="mb-0">
+                                    <input type="hidden" name="cart_action" value="clear_cart">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        Xoá toàn bộ giỏ hàng
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

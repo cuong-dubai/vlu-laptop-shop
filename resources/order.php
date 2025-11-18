@@ -33,6 +33,10 @@ if ($flash->has('checkout_form')) {
     $checkoutFormData = array_merge($checkoutFormData, $flash->get('checkout_form'));
 }
 
+if (!empty($_POST['cart_action'])) {
+    handleCartActions($_POST['cart_action']);
+}
+
 function processCheckout(): void
 {
     global $cartHelper, $orderModel, $flash, $func, $configBase, $loginMember, $d;
@@ -141,6 +145,27 @@ function processCheckout(): void
 
     $cartHelper->clear();
     $func->transfer("Đặt hàng thành công. Mã đơn hàng: {$orderCode}", $configBase);
+}
+
+function handleCartActions(string $action): void
+{
+    global $cartHelper, $func, $configBase;
+
+    if ($action === 'clear_cart') {
+        $cartHelper->clear();
+        $func->redirect($configBase . "gio-hang");
+        return;
+    }
+
+    if ($action === 'remove_item') {
+        $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+
+        if ($productId > 0) {
+            $cartHelper->remove($productId);
+        }
+
+        $func->redirect($configBase . "gio-hang");
+    }
 }
 
 function handleCheckoutError(array $messages, array $formData): void

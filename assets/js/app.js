@@ -34,6 +34,28 @@ VLU.Slick = function(){
 }
 
 VLU.HandleAddToCart = function(){
+    var handleRequest = function(productId, qty, callback){
+        $.ajax({
+            url: 'ajax/add_to_cart.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                product_id: productId,
+                qty: qty || 1
+            }
+        })
+        .done(function(response){
+            if (response && response.success) {
+                callback(true, response);
+            } else {
+                callback(false, response ? response.message : null);
+            }
+        })
+        .fail(function(){
+            callback(false, 'Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+        });
+    };
+
     $(document).on('click', '.btn-add-to-cart', function(e){
         e.preventDefault();
 
@@ -46,27 +68,43 @@ VLU.HandleAddToCart = function(){
 
         $btn.prop('disabled', true).addClass('is-loading');
 
-        $.ajax({
-            url: 'ajax/add_to_cart.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                product_id: productId,
-                qty: 1
-            }
-        })
-        .done(function(response){
-            if (response && response.success) {
+        handleRequest(productId, 1, function(success, result){
+            if (success) {
                 window.location.href = 'gio-hang';
             } else {
-                alert(response && response.message ? response.message : 'Không thể thêm sản phẩm vào giỏ hàng.');
+                alert(result || 'Không thể thêm sản phẩm vào giỏ hàng.');
             }
-        })
-        .fail(function(){
-            alert('Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
-        })
-        .always(function(){
+
             $btn.prop('disabled', false).removeClass('is-loading');
+        });
+    });
+
+    $(document).on('click', '.addcart', function(e){
+        e.preventDefault();
+
+        var $btn = $(this);
+        var productId = parseInt($btn.data('id'), 10) || 0;
+        var action = $btn.data('action');
+
+        if (!productId) {
+            return;
+        }
+
+        $btn.prop('disabled', true).addClass('is-loading');
+
+        handleRequest(productId, 1, function(success, result){
+            $btn.prop('disabled', false).removeClass('is-loading');
+
+            if (!success) {
+                alert(result || 'Không thể thêm sản phẩm vào giỏ hàng.');
+                return;
+            }
+
+            if (action === 'buynow') {
+                window.location.href = 'gio-hang';
+            } else {
+                alert('Sản phẩm đã được thêm vào giỏ hàng.');
+            }
         });
     });
 }
