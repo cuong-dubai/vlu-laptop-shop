@@ -147,6 +147,21 @@
                         </ul>
                     </li>
                 <?php } ?>
+
+                <!-- News -->
+                <?php
+                $none = "";
+                $active = "";
+                if ($com == 'news') {
+                    $active = 'active';
+                }
+                ?>
+                <li class="nav-item <?= $active ?>">
+                    <a class="nav-link <?= $active ?>" href="index.php?com=news&act=man" title="Quản lý tin tức">
+                        <i class="nav-icon text-sm fas fa-newspaper"></i>
+                        <p>Quản lý tin tức</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
