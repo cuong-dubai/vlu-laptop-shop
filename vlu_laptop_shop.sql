@@ -2,17 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 17, 2025 lúc 10:09 AM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
-=======
 -- Host: localhost
 -- Generation Time: Nov 17, 2025 at 03:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
->>>>>>> main
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,21 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
-<<<<<<< HEAD
--- Cơ sở dữ liệu: `vlu_laptop_shop`
-=======
 -- Database: `vlu_laptop_shop`
->>>>>>> main
 --
 
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
--- Cấu trúc bảng cho bảng `brand`
-=======
 -- Table structure for table `brand`
->>>>>>> main
 --
 
 CREATE TABLE `brand` (
@@ -57,11 +42,7 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-<<<<<<< HEAD
--- Đang đổ dữ liệu cho bảng `brand`
-=======
 -- Dumping data for table `brand`
->>>>>>> main
 --
 
 INSERT INTO `brand` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
@@ -73,11 +54,7 @@ INSERT INTO `brand` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
--- Cấu trúc bảng cho bảng `categories`
-=======
 -- Table structure for table `categories`
->>>>>>> main
 --
 
 CREATE TABLE `categories` (
@@ -95,48 +72,17 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-<<<<<<< HEAD
--- Đang đổ dữ liệu cho bảng `categories`
-=======
 -- Dumping data for table `categories`
->>>>>>> main
 --
 
 INSERT INTO `categories` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
 (2, 'laptop-gamming', NULL, NULL, 'Laptop Gamming', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128862, 1763128883),
 (3, 'laptop-van-ph', NULL, NULL, 'Laptop Văn Phòng', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128876, 0),
-<<<<<<< HEAD
-(4, 'laptop-gia-re', NULL, NULL, 'Laptop Giá Rẻ', NULL, 1, 'hienthi', 'san-pham', 1763128896, 1763128930),
-(6, 'laptop-cu', NULL, NULL, 'Laptop Cũ', NULL, 1, 'hienthi', 'san-pham', 1763362915, 0);
-=======
 (4, 'laptop-gia-re', NULL, NULL, 'Laptop Giá Rẻ', NULL, 1, 'hienthi', 'san-pham', 1763128896, 1763128930);
->>>>>>> main
 
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
--- Cấu trúc bảng cho bảng `order`
---
-
-CREATE TABLE `order` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `customer_name` varchar(255) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `total_price` double DEFAULT 0,
-  `status` tinyint(4) DEFAULT 1,
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `order`
---
-
-INSERT INTO `order` (`id`, `customer_name`, `phone`, `address`, `total_price`, `status`, `date_created`, `date_updated`) VALUES
-(1, 'Nguyễn Văn Test', '0901234567', '123 Đường Test, Quận 1', 97000000, 1, 1763362026, 0);
-=======
 -- Table structure for table `customers`
 --
 
@@ -163,38 +109,11 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `lastlogin`, `status`, `birthday`, `numb`) VALUES
 (2, 'cuongpro', '4297f44b13955235245b2497399d7a93', NULL, 'CUONG PHAN', '0382915164', 'minhcuongdev.vndts@gmail.com', NULL, 1, 'ce73dc2c4c7af22f715c7ef1b38e6025', '1763341982', 'hienthi', 0, 0);
->>>>>>> main
 
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
--- Cấu trúc bảng cho bảng `order_detail`
---
-
-CREATE TABLE `order_detail` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_order` int(10) UNSIGNED NOT NULL,
-  `id_product` int(10) UNSIGNED NOT NULL,
-  `price` double DEFAULT 0,
-  `quantity` int(11) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `order_detail`
---
-
-INSERT INTO `order_detail` (`id`, `id_order`, `id_product`, `price`, `quantity`) VALUES
-(1, 1, 15, 19500000, 2),
-(2, 1, 17, 29000000, 2);
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `product`
-=======
 -- Table structure for table `product`
->>>>>>> main
 --
 
 CREATE TABLE `product` (
@@ -218,11 +137,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-<<<<<<< HEAD
--- Đang đổ dữ liệu cho bảng `product`
-=======
 -- Dumping data for table `product`
->>>>>>> main
 --
 
 INSERT INTO `product` (`id`, `id_list`, `id_brand`, `photo`, `slug`, `content`, `desc`, `name`, `code`, `regular_price`, `discount`, `sale_price`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
@@ -242,11 +157,7 @@ INSERT INTO `product` (`id`, `id_list`, `id_brand`, `photo`, `slug`, `content`, 
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
--- Cấu trúc bảng cho bảng `user`
-=======
 -- Table structure for table `user`
->>>>>>> main
 --
 
 CREATE TABLE `user` (
@@ -272,21 +183,6 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-<<<<<<< HEAD
--- Đang đổ dữ liệu cho bảng `user`
---
-
-INSERT INTO `user` (`id`, `id_permission`, `username`, `password`, `confirm_code`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `user_token`, `lastlogin`, `status`, `role`, `secret_key`, `birthday`, `numb`) VALUES
-(1, 0, 'admin', '568a8135a10e8d89e74eded32fd10acf', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'r5txJHkKFCTkoc9Cwp9L2VbJrNWzfgD3', 'IUr5RRWenFSuIBUrmi7i9ZcHtH88pX0H', '1763369544', 'hienthi', 1, 'fcbd8425de65b190febd78fa3e65b6cb', 0, 0),
-(2, 0, 'nhathuy', 'bfd05e70286fd2d16ce459101c63ec5a', NULL, NULL, 'huy', '0369819251', 'huynhat870@gmail.com', NULL, 1, '4948299867eca6ae58c2aeab86ce138f', 'c37a538434dbfb772aaab1ef00fc3df1', '1763365552', 'hienthi', 0, NULL, 0, 0);
-
---
--- Chỉ mục cho các bảng đã đổ
---
-
---
--- Chỉ mục cho bảng `brand`
-=======
 -- Dumping data for table `user`
 --
 
@@ -299,39 +195,17 @@ INSERT INTO `user` (`id`, `id_permission`, `username`, `password`, `confirm_code
 
 --
 -- Indexes for table `brand`
->>>>>>> main
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
--- Chỉ mục cho bảng `categories`
-=======
 -- Indexes for table `categories`
->>>>>>> main
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
--- Chỉ mục cho bảng `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_detail_order` (`id_order`),
-  ADD KEY `fk_order_detail_product` (`id_product`);
-
---
--- Chỉ mục cho bảng `product`
-=======
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -339,7 +213,6 @@ ALTER TABLE `customers`
 
 --
 -- Indexes for table `product`
->>>>>>> main
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
@@ -347,78 +220,22 @@ ALTER TABLE `product`
   ADD KEY `fk_product_brand` (`id_brand`);
 
 --
-<<<<<<< HEAD
--- Chỉ mục cho bảng `user`
-=======
 -- Indexes for table `user`
->>>>>>> main
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `brand`
-=======
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
 -- AUTO_INCREMENT for table `brand`
->>>>>>> main
 --
 ALTER TABLE `brand`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
-<<<<<<< HEAD
--- AUTO_INCREMENT cho bảng `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT cho bảng `order`
---
-ALTER TABLE `order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT cho bảng `order_detail`
---
-ALTER TABLE `order_detail`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT cho bảng `product`
---
-ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT cho bảng `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Các ràng buộc cho các bảng đã đổ
---
-
---
--- Các ràng buộc cho bảng `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD CONSTRAINT `fk_order_detail_order` FOREIGN KEY (`id_order`) REFERENCES `order` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_order_detail_product` FOREIGN KEY (`id_product`) REFERENCES `product` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `product`
-=======
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -448,7 +265,6 @@ ALTER TABLE `user`
 
 --
 -- Constraints for table `product`
->>>>>>> main
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `fk_product_brand` FOREIGN KEY (`id_brand`) REFERENCES `brand` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
