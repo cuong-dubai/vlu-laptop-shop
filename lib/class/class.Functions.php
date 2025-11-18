@@ -569,7 +569,12 @@ class Functions
                         </div>
 
                     </a>
-
+                    <div class="product__actions mt-2">
+                        <button type="button" class="btn btn-sm btn-primary btn-add-to-cart w-100"
+                            data-product-id="<?= (int)$v['id'] ?>">
+                            Thêm vào giỏ hàng
+                        </button>
+                    </div>
                 </div>
             <?php }
         if ($class != '') { ?>
