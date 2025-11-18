@@ -7,13 +7,13 @@ if (!defined('SOURCES'))
 $order_by = 'numb,id desc';
 if ($id != '') {
     /* Lấy sản phẩm detail */
-    $rowDetail = $d->rawQueryOne("select * from #_product where id = ? and type = ? and find_in_set('hienthi',status) limit 0,1", array($id, $type));
+    $rowDetail = $d->rawQueryOne("select type, *, desc$lang, content$lang, code, view, id_brand, id_list, id_cat, id_item, id_sub, photo, options, discount, sale_price, regular_price from #_product where id = ? and type = ? and find_in_set('hienthi',status) limit 0,1", array($id, $type));
 
     /* Lấy cấp 1 */
     $productList = $d->rawQueryOne("select * from #_categories where id = ? and type = ? and find_in_set('hienthi',status) limit 0,1", array($rowDetail['id_list'], $type));
 
     /* Lấy thương hiệu */
-    $productBrand = $d->rawQueryOne("select name,slug,id from #_brand where id = ? and type = ? and find_in_set('hienthi',status)", array($rowDetail['id_brand'], $type));
+    //$productBrand = $d->rawQueryOne("select name$lang, slugvi, slugen, id from #_product_brand where id = ? and type = ? and find_in_set('hienthi',status)", array($rowDetail['id_brand'], $type));
    
     /* Lấy sản phẩm cùng loại */
     $where = "";

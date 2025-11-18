@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 17, 2025 at 03:03 AM
+-- Generation Time: Nov 17, 2025 at 01:47 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -83,36 +83,6 @@ INSERT INTO `categories` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `num
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
---
-
-CREATE TABLE `customers` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `username` varchar(225) DEFAULT NULL,
-  `password` varchar(225) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `fullname` varchar(225) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `address` varchar(225) DEFAULT NULL,
-  `gender` tinyint(1) DEFAULT 0,
-  `login_session` varchar(255) DEFAULT NULL,
-  `lastlogin` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `birthday` int(11) DEFAULT 0,
-  `numb` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `lastlogin`, `status`, `birthday`, `numb`) VALUES
-(2, 'cuongpro', '4297f44b13955235245b2497399d7a93', NULL, 'CUONG PHAN', '0382915164', 'minhcuongdev.vndts@gmail.com', NULL, 1, 'ce73dc2c4c7af22f715c7ef1b38e6025', '1763341982', 'hienthi', 0, 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `product`
 --
 
@@ -187,7 +157,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `id_permission`, `username`, `password`, `confirm_code`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `user_token`, `lastlogin`, `status`, `role`, `secret_key`, `birthday`, `numb`) VALUES
-(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '3652e21b66e1b347f6acb54819a12550', '1763344973', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
+(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '35832ba98fcf2b39553a0c6d4da9ab76', '1763339776', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -203,12 +173,6 @@ ALTER TABLE `brand`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `customers`
---
-ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -240,12 +204,6 @@ ALTER TABLE `brand`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product`

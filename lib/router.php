@@ -139,10 +139,11 @@ switch ($com) {
         $source = "product";
         $type = $com;
         $titleMain = "Sản phẩm";
-        $template = isset($_GET['id']) ? "product/product_detail" : "product/product";
+        $template = "product/product";
         break;
 
     case '':
+    case 'trang-chu':
     case 'index':
 
         $source = "index";
