@@ -1,62 +1,72 @@
-<?php 
-// 1. Thanh Thông Báo (Top Bar)
-?>
-<div class="top-bar">
-  {"Select in the calendar on the right hand side convenient for you the day and time and call yourself a free specialist."}
-</div>
-
-<?php
-// 2. Header Chính (Logo, Tìm kiếm, Tiện ích)
-?>
-<header class="header-main container">
-    <div class="header-logo">
-        <img src="<?= ASSET ?>assets/images/logo.jpg" alt="VLU Laptop Shop Logo" class="logo-img"> 
-        <span class="logo-text">VLU LAPTOP SHOP</span>
+<header id="header__wrapper">
+    <div class="header__top">
+        <div class="wrap-content">
+            <p>“Select in the calendar on the right hand side convenient for you the day and time and call yourself a
+                free specialist.”</p>
+        </div>
     </div>
+    <div class="wrap-content">
+        <div class="header__middle">
+            <div class="header__middle--logo">
+                <a href=""><img src="assets/images/logo_head.png" width="124" height="90" alt="Logo Header"></a>
+            </div>
+            <div class="header__middle--search">
+                <div class="search w-clear">
+                    <input type="text" id="keyword" placeholder="Tìm kiếm..." autocomplete="off" onkeypress="" />
+                    <p onclick="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path
+                                d="M15.2081 13.9319C15.7399 14.4608 16.2599 14.9838 16.78 15.5038C17.0932 15.8141 17.4064 16.1244 17.7137 16.4405C18.0889 16.8276 18.0948 17.3713 17.7344 17.7318C17.3739 18.0923 16.8243 18.0923 16.4431 17.7141C15.6808 16.9576 14.9244 16.1953 14.168 15.4329C14.0941 15.3591 14.038 15.2704 13.9671 15.1758C11.6358 16.9547 9.08289 17.522 6.29362 16.7892C4.23712 16.2485 2.60315 15.0577 1.43308 13.2818C-0.924799 9.70935 -0.316124 4.96975 2.83953 2.17741C6.05724 -0.671081 10.7819 -0.724269 14.0734 2.01489C17.2409 4.65063 18.3844 9.92506 15.2081 13.9319ZM15.2997 8.56287C15.2908 4.82792 12.274 1.81987 8.54513 1.82873C4.84284 1.8376 1.8231 4.86042 1.83197 8.55105C1.83788 12.2919 4.83693 15.2911 8.57172 15.297C12.2799 15.3029 15.3085 12.2683 15.2997 8.56287Z"
+                                fill="#181818" />
+                        </svg>
+                    </p>
+                </div>
+            </div>
+            <div class="middle__right">
+                <div class="middle__right--item">
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22" fill="none">
+                            <path
+                                d="M19.997 10.9827C19.997 12.67 20.0089 14.3585 19.9825 16.0457C19.9786 16.2722 19.8482 16.6026 19.6665 16.7051C16.612 18.4366 13.5364 20.1327 10.4753 21.8541C10.1303 22.0478 9.86964 22.049 9.52469 21.8554C6.48069 20.1479 3.42483 18.462 0.386096 16.7456C0.195188 16.638 0.0187617 16.3279 0.0174451 16.1115C-0.00493729 12.694 -0.00757051 9.27654 0.0200783 5.85906C0.0213949 5.63249 0.237319 5.31479 0.447977 5.19582C3.40772 3.52125 6.38984 1.88213 9.34958 0.208829C9.79196 -0.0405207 10.1211 -0.0848213 10.5832 0.17592C13.6009 1.88339 16.641 3.55669 19.6573 5.2667C19.8403 5.37049 19.9773 5.69578 19.9812 5.91981C20.0102 7.60704 19.997 9.29552 19.997 10.9827ZM3.14176 5.99196C3.29317 6.08689 3.38007 6.14765 3.47223 6.19828C5.76445 7.47413 8.05272 8.75379 10.3515 10.0195C10.8123 10.2739 11.0783 10.5271 11.0651 11.127C11.0111 13.5724 11.0414 16.0204 11.0441 18.467C11.0441 18.6835 11.0638 18.9012 11.0743 19.1201C11.1942 19.1037 11.2442 19.1087 11.2784 19.0898C13.3824 17.9253 15.4916 16.7671 17.5797 15.5748C17.7627 15.4698 17.8983 15.1394 17.901 14.9128C17.9234 12.2978 17.9076 9.68157 17.9234 7.0653C17.926 6.7033 17.8088 6.49193 17.481 6.31219C15.1822 5.04899 12.8834 3.78579 10.6083 2.48462C10.1343 2.21375 9.7946 2.25046 9.3588 2.51626C8.62018 2.96686 7.8447 3.36177 7.08765 3.78326C5.78815 4.50852 4.48997 5.23632 3.14176 5.99196ZM8.87824 19.1746C8.91773 19.0518 8.95197 18.9961 8.95197 18.9404C8.95592 16.5988 8.96776 14.2572 8.9388 11.9156C8.93617 11.7093 8.70971 11.4308 8.50695 11.3131C7.17717 10.5397 5.82765 9.79928 4.48076 9.05377C3.71449 8.62975 2.94032 8.21585 2.08716 7.75133C2.08716 10.2942 2.08057 12.7181 2.10296 15.1407C2.10427 15.2938 2.30045 15.4951 2.45976 15.5875C3.69606 16.3039 4.9442 17.0038 6.19367 17.7013C7.07711 18.1936 7.96582 18.6746 8.87824 19.1746Z"
+                                fill="#333333" />
+                        </svg>
+                        Tra Cứu Đơn Hàng
+                    </a>
+                </div>
+                <div class="middle__right--item">
 
-    <div class="search-container">
-        <input type="text" placeholder="Tìm kiếm..." class="search-input">
-        <button class="search-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </button>
-    </div>
+                    <?php if (array_key_exists($loginMember, $_SESSION) && $_SESSION[$loginMember]['active'] == true) { ?>
+                        <div class="user-header d-flex align-items-center justify-content-end p-2 bg-light border rounded">
+                            <!-- Username -->
+                            <a href="account/thong-tin"
+                                class="d-flex align-items-center mr-3 text-dark font-weight-bold user-link">
+                                <i class="fas fa-user-circle mr-1"></i>
+                                <span>Hi, <?= $_SESSION[$loginMember]['username'] ?></span>
+                            </a>
 
-    <div class="header-utilities">
-        <button class="utility-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text mr-1"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Tra Cứu Đơn Hàng
-        </button>
-        <button class="utility-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user mr-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Đăng Nhập
-        </button>
-        <button class="utility-item cart-header-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart mr-1"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.6 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 1.8-1.5L22 6H5"/></svg>
-            GIỎ HÀNG (0)
-        </button>
+                            <!-- Logout -->
+                            <a href="account/dang-xuat" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                                <i class="fas fa-sign-out-alt mr-1"></i>
+                                <span>Đăng xuất</span>
+                            </a>
+                        </div>
+
+                    <?php } else { ?>
+                        <a href="account/dang-nhap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
+                                <path
+                                    d="M14.0097 5.68082C14.0399 8.78676 11.3197 11.3862 7.99754 11.4244C4.7578 11.4626 1.94677 8.80587 1.94845 5.7063C1.95013 2.63859 4.65524 0.0566746 7.92693 0.000926982C11.1835 -0.0564135 13.9794 2.55417 14.0097 5.68082ZM7.97401 9.54811C10.2101 9.54493 12.0308 7.8263 12.0308 5.72064C12.0308 3.60382 10.2235 1.8852 7.99754 1.88201C5.7615 1.87883 3.93399 3.60063 3.93736 5.70789C3.93736 7.83427 5.74469 9.5513 7.97401 9.54811Z"
+                                    fill="#333333" />
+                                <path
+                                    d="M15.9986 20C15.3395 20 14.7343 20 14.1374 20C13.3556 16.2076 11.0658 14.172 7.72687 14.3121C4.90407 14.43 2.13843 16.4353 1.8812 19.9793C1.25914 19.9793 0.633724 19.9793 0.00830321 19.9793C-0.178314 16.6137 2.79243 12.6158 7.74368 12.4295C12.1889 12.2622 16.086 15.8317 15.9986 20Z"
+                                    fill="#333333" />
+                            </svg>
+                            Đăng Nhập
+                        </a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+
     </div>
 </header>
-
-<?php
-// 3. Thanh Điều Hướng Menu Phụ
-?>
-<nav class="nav-menu">
-    <div class="nav-content container">
-        <button class="nav-category-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu mr-2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            DANH MỤC SẢN PHẨM
-        </button>
-        
-        <div class="nav-links">
-            <a href="#" class="nav-link">TRANG CHỦ</a>
-            <a href="#" class="nav-link">GIỚI THIỆU</a>
-            <a href="#" class="nav-link">TIN TỨC</a>
-            <a href="#" class="nav-link">LIÊN HỆ</a>
-        </div>
-        
-        <button class="nav-cart-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart mr-1"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.6 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 1.8-1.5L22 6H5"/></svg>
-            GIỎ HÀNG (0)
-        </button>
-    </div>
-</nav>

@@ -22,19 +22,20 @@ function validateForm(ele = "") {
 validateForm('validation-user');
 VLU.Slick = function(){
     $('.slideshow').slick({
-      infinite: true,
-      slidesToShow: 1,
-      vertical: false,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 3000,
-      arrows: false,
-      dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    vertical: false,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    dots: false,
     });
 }
 
 $(document).ready(function () {
     VLU.Slick();
+
 
     // Xử lý thêm vào giỏ hàng bằng AJAX
     $(document).on('click', '.btn-add-cart', function (e) {
@@ -65,4 +66,6 @@ $(document).ready(function () {
             }
         });
     });
+
+main
 });

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="<?= $config['website']['lang-doc'] ?>">
+<html lang="vi">
     <head>
         <?php 
             include TEMPLATE . LAYOUT . "head.php";
@@ -11,8 +11,10 @@
         <div>
             <?php 
                 include TEMPLATE . LAYOUT . "header.php";
+                include TEMPLATE . LAYOUT . "menu.php";
+                if($com == 'index') include TEMPLATE . LAYOUT . "slide.php";
             ?>
-            <div class="w-clear">
+            <div class="w-clear <?= ($source != 'index') ? 'wrap-detail' : '' ?>">
 
                 <?php include TEMPLATE . $template . "_tpl.php"; ?>
 
@@ -21,5 +23,8 @@
                 include TEMPLATE . LAYOUT . "footer.php";
             ?>
         </div>
+        <?php 
+         include TEMPLATE . LAYOUT . "js.php";
+        ?>
     </body>
 </html>

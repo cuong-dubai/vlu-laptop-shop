@@ -2,6 +2,7 @@
     <div class="title-main">
         <h2><?= (!empty($titleCate)) ? $titleCate : @$titleMain ?></h2>
     </div>
+<<<<<<< HEAD
 
     <?php if (empty($cartItems)): ?>
         <p style="padding:20px;">Giỏ hàng của bạn đang trống.</p>
@@ -100,4 +101,6 @@
             </div>
         </form>
     <?php endif; ?>
+=======
+>>>>>>> main
 </div>

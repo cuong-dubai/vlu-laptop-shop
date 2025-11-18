@@ -1,366 +1,52 @@
-<?php 
-// NỘI DUNG CHÍNH (Banner Trang Chủ)
-?>
-
-<main class="main-content container">
-    <div class="main-grid">
-        
-        <!-- Banner lớn bên trái - laptop4 -->
-        <div class="banner-large">
-            <img src="<?= ASSET ?>assets/images/laptop4.jpg" alt="Black Friday Laptop Sale" class="banner-img">
-            
-            <div class="main-banner-overlay">
-                <button class="shop-btn">
-                    SHOP NOW
-                </button>
+<section id="ProductBestSeller">
+    <div class="wrap-content">
+        <div class="ProductBestSeller__Wrap">
+            <div class="title-main title-white">
+                <h2>SẢN PHẨM BÁN CHẠY <img src="assets/images/sale.gif" width="32" height="32" alt="Sale"></h2>
             </div>
-            <div class="promo-text">
-                <p>PROMO:BLACK FRIDAY!</p>
-                <p>THIS WEEKEND ONLY</p>
-            </div>
-        </div>
-        
-        <!-- Grid 3 hình laptop bên phải -->
-        <div class="laptop-grid">
-            <div class="laptop-item">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop 1" class="laptop-img">
-            </div>
-            
-            <div class="laptop-item">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop 2" class="laptop-img">
-            </div>
-            
-            <div class="laptop-item">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop 3" class="laptop-img">
+            <div class="ProductBestSeller__list">
+                <?php
+                echo $func->GetProducts($productBestSeller);
+                ?>
             </div>
         </div>
     </div>
+</section>
+<section id="Product__Categories">
+    <div class="wrap-content">
+        <?php
+        foreach ($categories as $key => $value) {
+            $productForList = $d->rawQuery("select * from #_product where type = ? and id_list = ? and find_in_set('hienthi',status) order by numb,id desc", array('san-pham', $value['id']));
+            ?>
+            <div class="Product__Categories__Wrap">
+                <div class="title__categories">
+                    <h2><?= $value['name' . $lang] ?></h2>
+                    <a href="<?= $value['slug'] ?>" class="view__all__btn">Xem tất cả</a>
+                </div>
+                <div class="ProductList__list">
+                    <?php
+                    echo $func->GetProducts($productForList);
+                    ?>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+<section id="Post">
+    <div class="Post__Wrap">
+        <div class="wrap-content">
+            <div class="Post__nav">
+                <h2>Tin công nghệ</h2>
+                <a href="tin-cong-nghe" class="view__all__post">Xem tất cả <svg xmlns="http://www.w3.org/2000/svg" width="14"
+                        height="7" viewBox="0 0 14 7" fill="none">
+                        <path
+                            d="M12.1123 4.06465C12.0096 4.06465 11.9449 4.06465 11.8806 4.06465C8.1634 4.06465 4.44655 4.06465 0.729393 4.06433C0.651301 4.06433 0.572897 4.06659 0.49543 4.05884C0.209302 4.03143 -0.00216976 3.78857 1.68015e-05 3.49475C0.00220337 3.20093 0.215862 2.96356 0.504176 2.93872C0.576645 2.93259 0.649739 2.93453 0.722521 2.93453C4.43437 2.93421 8.14622 2.93453 11.8581 2.93453C11.9293 2.93453 12.0002 2.93453 12.0714 2.93453C12.0858 2.91389 12.0998 2.89324 12.1142 2.8726C12.0636 2.83842 12.0058 2.81165 11.9637 2.76843C11.383 2.17434 10.8038 1.57896 10.226 0.981971C10.037 0.786522 9.99543 0.529148 10.1085 0.303059C10.2216 0.0776153 10.4506 -0.0446211 10.697 0.0150457C10.7979 0.0395575 10.9054 0.0966442 10.9788 0.17147C11.9318 1.1413 12.8811 2.115 13.8266 3.09256C14.0734 3.34768 14.0531 3.67698 13.7891 3.94886C13.0001 4.76098 12.2092 5.57148 11.4192 6.38263C11.2789 6.52679 11.1409 6.67322 10.9981 6.81449C10.7542 7.05606 10.4212 7.06154 10.2041 6.8319C9.98606 6.60098 9.99575 6.25587 10.2325 6.01108C10.8101 5.41409 11.3898 4.81903 11.9687 4.22301C12.0077 4.18269 12.0439 4.14012 12.1123 4.06465Z"
+                            fill="white" />
+                    </svg></a>
+            </div>
+            <div class="Post__List">
 
-    <!-- SẢN PHẨM BÁN CHẠY -->
-    <section class="products-section best-selling">
-        <div class="section-header">
-            <h2 class="section-title">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="title-icon lightning">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-                SẢN PHẨM BÁN CHẠY
-            </h2>
-        </div>
-        <div class="products-scroll-wrapper">
-            <button class="scroll-arrow scroll-left" onclick="scrollProducts('left')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <div class="products-scroll" id="bestSellingScroll">
-                <div class="product-card">
-                    <span class="hot-badge">Hot</span>
-                    <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop" class="product-img">
-                    <div class="product-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>5.0 (10 đánh giá)</span>
-                    </div>
-                    <h3 class="product-name">Laptop HP Omen 16-am0127TX</h3>
-                    <div class="product-price">
-                        <span class="old-price">28.990.000₫</span>
-                        <span class="new-price">26.490.000₫</span>
-                    </div>
-                    <button class="product-btn black-btn">
-                        Xem chi tiết
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-                <div class="product-card">
-                    <span class="hot-badge">Hot</span>
-                    <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop" class="product-img">
-                    <div class="product-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>5.0 (10 đánh giá)</span>
-                    </div>
-                    <h3 class="product-name">Laptop HP Omen 16-am0127TX</h3>
-                    <div class="product-price">
-                        <span class="old-price">28.990.000₫</span>
-                        <span class="new-price">26.490.000₫</span>
-                    </div>
-                    <button class="product-btn black-btn">
-                        Xem chi tiết
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-                <div class="product-card">
-                    <span class="hot-badge">Hot</span>
-                    <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop" class="product-img">
-                    <div class="product-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>5.0 (10 đánh giá)</span>
-                    </div>
-                    <h3 class="product-name">Laptop HP Omen 16-am0127TX</h3>
-                    <div class="product-price">
-                        <span class="old-price">28.990.000₫</span>
-                        <span class="new-price">26.490.000₫</span>
-                    </div>
-                    <button class="product-btn black-btn">
-                        Xem chi tiết
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-                <div class="product-card">
-                    <span class="hot-badge">Hot</span>
-                    <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop" class="product-img">
-                    <div class="product-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>5.0 (10 đánh giá)</span>
-                    </div>
-                    <h3 class="product-name">Laptop HP Omen 16-am0127TX</h3>
-                    <div class="product-price">
-                        <span class="old-price">28.990.000₫</span>
-                        <span class="new-price">26.490.000₫</span>
-                    </div>
-                    <button class="product-btn black-btn">
-                        Xem chi tiết
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-                <div class="product-card">
-                    <span class="hot-badge">Hot</span>
-                    <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop" class="product-img">
-                    <div class="product-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <span>5.0 (10 đánh giá)</span>
-                    </div>
-                    <h3 class="product-name">Laptop HP Omen 16-am0127TX</h3>
-                    <div class="product-price">
-                        <span class="old-price">28.990.000₫</span>
-                        <span class="new-price">26.490.000₫</span>
-                    </div>
-                    <button class="product-btn black-btn">
-                        Xem chi tiết
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <button class="scroll-arrow scroll-right" onclick="scrollProducts('right')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <!-- SẢN PHẨM NỔI BẬT -->
-    <section class="products-section">
-        <div class="section-header">
-            <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
-        </div>
-        <div class="products-grid">
-            <div class="product-card">
-                <span class="hot-badge">Hot</span>
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop" class="product-img">
-                <h3 class="product-name">Laptop HP Omen 16</h3>
-                <div class="product-price">
-                    <span class="old-price">28.990.000đ</span>
-                    <span class="new-price">26.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <span class="hot-badge">Hot</span>
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop" class="product-img">
-                <h3 class="product-name">Laptop Acer Nitro 5</h3>
-                <div class="product-price">
-                    <span class="old-price">25.990.000đ</span>
-                    <span class="new-price">23.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <span class="hot-badge">Hot</span>
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop" class="product-img">
-                <h3 class="product-name">Laptop Asus TUF</h3>
-                <div class="product-price">
-                    <span class="old-price">27.990.000đ</span>
-                    <span class="new-price">25.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <span class="hot-badge">Hot</span>
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop" class="product-img">
-                <h3 class="product-name">Laptop Dell G15</h3>
-                <div class="product-price">
-                    <span class="old-price">29.990.000đ</span>
-                    <span class="new-price">27.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
             </div>
         </div>
-    </section>
-
-    <!-- LAPTOP ACER -->
-    <section class="products-section">
-        <div class="section-header">
-            <h2 class="section-title">LAPTOP ACER</h2>
-        </div>
-        <div class="products-grid">
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop Acer" class="product-img">
-                <h3 class="product-name">Laptop Acer Nitro 5</h3>
-                <div class="product-price">
-                    <span class="new-price">23.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop Acer" class="product-img">
-                <h3 class="product-name">Laptop Acer Predator</h3>
-                <div class="product-price">
-                    <span class="new-price">35.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop Acer" class="product-img">
-                <h3 class="product-name">Laptop Acer Aspire</h3>
-                <div class="product-price">
-                    <span class="new-price">18.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop Acer" class="product-img">
-                <h3 class="product-name">Laptop Acer Swift</h3>
-                <div class="product-price">
-                    <span class="new-price">21.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- LAPTOP ASUS -->
-    <section class="products-section">
-        <div class="section-header">
-            <h2 class="section-title">LAPTOP ASUS</h2>
-        </div>
-        <div class="products-grid">
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop Asus" class="product-img">
-                <h3 class="product-name">Laptop Asus TUF Gaming</h3>
-                <div class="product-price">
-                    <span class="new-price">25.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop Asus" class="product-img">
-                <h3 class="product-name">Laptop Asus ROG</h3>
-                <div class="product-price">
-                    <span class="new-price">42.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop Asus" class="product-img">
-                <h3 class="product-name">Laptop Asus Zenbook</h3>
-                <div class="product-price">
-                    <span class="new-price">28.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop Asus" class="product-img">
-                <h3 class="product-name">Laptop Asus VivoBook</h3>
-                <div class="product-price">
-                    <span class="new-price">19.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- LAPTOP DELL -->
-    <section class="products-section">
-        <div class="section-header">
-            <h2 class="section-title">LAPTOP DELL</h2>
-        </div>
-        <div class="products-grid">
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop Dell" class="product-img">
-                <h3 class="product-name">Laptop Dell G15</h3>
-                <div class="product-price">
-                    <span class="new-price">27.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Laptop Dell" class="product-img">
-                <h3 class="product-name">Laptop Dell XPS</h3>
-                <div class="product-price">
-                    <span class="new-price">45.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Laptop Dell" class="product-img">
-                <h3 class="product-name">Laptop Dell Inspiron</h3>
-                <div class="product-price">
-                    <span class="new-price">22.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Laptop Dell" class="product-img">
-                <h3 class="product-name">Laptop Dell Alienware</h3>
-                <div class="product-price">
-                    <span class="new-price">55.990.000đ</span>
-                </div>
-                <button class="product-btn">Xem chi tiết</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- TIN CÔNG NGHỆ -->
-    <section class="news-section">
-        <div class="section-header">
-            <h2 class="section-title">TIN CÔNG NGHỆ</h2>
-        </div>
-        <div class="news-scroll">
-            <div class="news-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Tech News" class="news-img">
-                <p class="news-text">Vừa bán Hàng hiệu suất cao nhất 5.000 tỷ USD</p>
-            </div>
-            <div class="news-card">
-                <img src="<?= ASSET ?>assets/images/laptop2.png" alt="Tech News" class="news-img">
-                <p class="news-text">NVIDIA ra mắt GPU mới với hiệu năng vượt trội</p>
-            </div>
-            <div class="news-card">
-                <img src="<?= ASSET ?>assets/images/laptop3.png" alt="Tech News" class="news-img">
-                <p class="news-text">AMD Ryzen 9000 series chính thức lên kệ</p>
-            </div>
-            <div class="news-card">
-                <img src="<?= ASSET ?>assets/images/laptop1.png" alt="Tech News" class="news-img">
-                <p class="news-text">Windows 12 sẽ ra mắt vào năm 2025</p>
-            </div>
-        </div>
-    </section>
-</main>
+    </div>
+</section>

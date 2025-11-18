@@ -14,8 +14,12 @@ $config = array(
         'timefinish' => '05/11/2025'
     ),
     'website' => array(
-        // Thêm khóa 'lang-doc' mà template đang yêu cầu
-        'lang-doc' => 'vi', 
+        'lang-doc' => 'vi',
+        'lang' => array(
+            'vi'=> 'Tiếng việt',
+        ),
+        'secret' => 'vlu',
+        'salt' => 'promax',
     ),
     'database' => array(
         'server-name' => $_SERVER["SERVER_NAME"],
@@ -28,7 +32,13 @@ $config = array(
         'port' => 3306,
         'prefix' => '',
         'charset' => 'utf8mb4'
-    )
+    ),
+    'login' => array(
+        'admin' => 'LoginAdmin',
+        'member' => 'LoginMember',
+        'attempt' => 5,
+        'delay' => 15
+    ),
 );
 $http = 'http://';
 $port = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443 ? ':' . $_SERVER['SERVER_PORT'] : '';
@@ -37,6 +47,16 @@ $configUrl = $serverName . $config['database']['url'];
 $configBase = $http . $configUrl;
 
 
+define('TOKEN', md5($config['database']['url']));
+$loginAdmin = $config['login']['admin'];
+$loginMember = $config['login']['member'];
+
+
+
 define('ROOT', str_replace(basename(__DIR__), '', __DIR__));
 define('ASSET', $http . $configUrl);
-define('ADMIN', 'dashboard');
+define('ADMIN', 'admin');
+
+// var_dump(ROOT);
+/* Cấu hình upload */
+require_once LIB . "constant.php";
