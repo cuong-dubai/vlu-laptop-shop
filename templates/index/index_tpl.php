@@ -45,7 +45,25 @@
                     </svg></a>
             </div>
             <div class="Post__List">
-
+                <?php if (!empty($latestNews)) { ?>
+                    <?php foreach ($latestNews as $news) { ?>
+                        <div class="post-item mb-3 p-3 border rounded">
+                            <h4 class="mb-2">
+                                <a href="blog/<?= htmlspecialchars($news['slug'] ?? '') ?>" class="text-dark text-decoration-none">
+                                    <?= htmlspecialchars($news['name'] ?? '') ?>
+                                </a>
+                            </h4>
+                            <?php if (!empty($news['desc'])) { ?>
+                                <p class="text-muted mb-2"><?= htmlspecialchars(mb_substr($news['desc'], 0, 150)) ?>...</p>
+                            <?php } ?>
+                            <small class="text-muted">
+                                <?= !empty($news['date_created']) ? date('d/m/Y', $news['date_created']) : '' ?>
+                            </small>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <p class="text-muted">Chưa có tin tức nào.</p>
+                <?php } ?>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ class Brand
      *
      * @param Database|null $db
      */
-    public function __construct(Database $db = null)
+    public function __construct(?Database $db = null)
     {
         if ($db instanceof Database) {
             $this->db = $db;
