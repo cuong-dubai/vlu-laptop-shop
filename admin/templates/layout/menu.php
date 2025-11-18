@@ -28,7 +28,7 @@
                             <?php
                             $none = "";
                             $active = "";
-                            $menuopen = "menu-open";
+                            $menuopen = "";
                             if ((($com == 'product') || ($com == 'import') || ($com == 'export')) && ($k == $_GET['type'])) {
                                 $active = 'active';
                                 $menuopen = 'menu-open';
@@ -92,7 +92,7 @@
                     <?php
                     $none = "";
                     $active = "";
-                    $menuopen = "menu-open";
+                    $menuopen = "";
                     if ($com == 'user' && $act != 'login' && $act != 'logout') {
                         $active = 'active';
                         $menuopen = 'menu-open';
