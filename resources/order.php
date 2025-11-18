@@ -144,7 +144,7 @@ function processCheckout(): void
     }
 
     $cartHelper->clear();
-    $func->transfer("Đặt hàng thành công. Mã đơn hàng: {$orderCode}", $configBase);
+    $func->transfer("Bạn đã đặt hàng thành công. Mã đơn hàng: {$orderCode}", $configBase);
 }
 
 function handleCartActions(string $action): void

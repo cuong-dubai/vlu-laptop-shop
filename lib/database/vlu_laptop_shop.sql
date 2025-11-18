@@ -178,6 +178,30 @@ CREATE TABLE `order_detail` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `desc` mediumtext DEFAULT NULL,
+  `content` mediumtext DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `numb` int(11) DEFAULT 0,
+  `status` varchar(255) DEFAULT NULL,
+  `type` varchar(30) DEFAULT 'tin-tuc',
+  `date_created` int(11) DEFAULT 0,
+  `date_updated` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -251,6 +275,14 @@ ALTER TABLE `order_detail`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `slug` (`slug`),
+  ADD KEY `type` (`type`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -288,6 +320,12 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --

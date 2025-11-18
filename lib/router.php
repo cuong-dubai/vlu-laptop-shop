@@ -36,6 +36,8 @@ $router->map('GET|POST', '[a:com]', 'allpage', 'show');
 
 $router->map('GET|POST', '[a:com]/[a:action]', 'account', 'account');
 
+$router->map('GET|POST', 'blog/[a:slug]', 'news', 'blog-detail');
+
 
 $match = $router->match();
 
@@ -57,6 +59,11 @@ if (is_array($match)) {
     } else {
 
         $com = (!empty($match['params']['com'])) ? htmlspecialchars($match['params']['com']) : htmlspecialchars($match['target']);
+        
+        // Xử lý route đặc biệt blog-detail
+        if ($match['name'] === 'blog-detail') {
+            $com = 'blog-detail';
+        }
 
         $getPage = !empty($_GET['p']) ? htmlspecialchars($_GET['p']) : 1;
 
@@ -125,6 +132,15 @@ switch ($com) {
         $type = $com;
         $titleMain = "Tin tức";
         $template = "static/static";
+        break;
+    case "blog-detail":
+        $source = "news";
+        $type = "blog";
+        // Lấy slug từ params
+        if (!empty($match['params']['slug'])) {
+            $_GET['slug'] = htmlspecialchars($match['params']['slug']);
+        }
+        $template = "blog/detail";
         break;
     case "gio-hang":
         $source = "order";
