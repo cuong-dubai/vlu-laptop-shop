@@ -22,4 +22,12 @@ $currentType = isset($type) ? $type : '';
             <p>Giảng viên hướng dẫn: Thầy Trần Công Thanh</p>
         </div>
     <?php } ?>
+
+    <?php if ($currentType === 'lien-he') { ?>
+        <div class="team-info mt-4">
+            <p><strong>Người làm 1:</strong> Cường</p>
+            <p><strong>Người làm 2:</strong> Huy</p>
+            <p>Email: Huy.2274802010328@vanlanguni.vn</p>
+        </div>
+    <?php } ?>
 </div>
