@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 17, 2025 at 01:47 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: localhost:3306
+-- Generation Time: Nov 18, 2025 at 08:58 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `vlu_laptop_shop`
+-- Database: `vlu-laptop-shop`
 --
 
 -- --------------------------------------------------------
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `brand` (
-  `id` int(11) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `content` mediumtext DEFAULT NULL,
-  `desc` mediumtext DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `numb` int(11) DEFAULT 0,
-  `status` varchar(255) DEFAULT NULL,
-  `type` varchar(30) DEFAULT NULL,
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
+  `id` int NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `desc` mediumtext COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numb` int DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_created` int DEFAULT '0',
+  `date_updated` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -58,17 +58,17 @@ INSERT INTO `brand` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `content` mediumtext DEFAULT NULL,
-  `desc` mediumtext DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `numb` int(11) DEFAULT 0,
-  `status` varchar(255) DEFAULT NULL,
-  `type` varchar(30) DEFAULT NULL,
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
+  `id` int NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `desc` mediumtext COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numb` int DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_created` int DEFAULT '0',
+  `date_updated` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -78,7 +78,101 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
 (2, 'laptop-gamming', NULL, NULL, 'Laptop Gamming', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128862, 1763128883),
 (3, 'laptop-van-ph', NULL, NULL, 'Laptop Văn Phòng', NULL, 1, 'noibat,hienthi', 'san-pham', 1763128876, 0),
-(4, 'laptop-gia-re', NULL, NULL, 'Laptop Giá Rẻ', NULL, 1, 'hienthi', 'san-pham', 1763128896, 1763128930);
+(4, 'laptop-gia-re', NULL, NULL, 'Laptop Giá Rẻ', NULL, 1, 'hienthi', 'san-pham', 1763128896, 1763128930),
+(5, 'laptop-cu', NULL, NULL, 'Laptop Cũ', NULL, 1, '', 'san-pham', 1763443314, 1763454160);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` int UNSIGNED NOT NULL,
+  `username` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fullname` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` tinyint(1) DEFAULT '0',
+  `login_session` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastlogin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `birthday` int DEFAULT '0',
+  `numb` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `lastlogin`, `status`, `birthday`, `numb`) VALUES
+(2, 'cuongpro', '4297f44b13955235245b2497399d7a93', NULL, 'CUONG PHAN', '0382915164', 'minhcuongdev.vndts@gmail.com', NULL, 1, 'ce73dc2c4c7af22f715c7ef1b38e6025', '1763341982', 'hienthi', 0, 0),
+(4, 'nhathuy', '6acc425067c38744abeed172802af91a', NULL, 'nhathuy', '0369819251', 'kimphung7a3@gmail.cm', NULL, 1, 'b3414f442e328dec26cdec56f6f315f1', '1763445824', 'hienthi', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `id` int UNSIGNED NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `desc` mediumtext COLLATE utf8mb4_unicode_ci,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numb` int DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT 'tin-tuc',
+  `date_created` int DEFAULT '0',
+  `date_updated` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `slug`, `name`, `desc`, `content`, `photo`, `numb`, `status`, `type`, `date_created`, `date_updated`) VALUES
+(1, 'acsca', 'Tin tức công nghệ mới', 'câcscá', 'câcsca', 'slide-hop-giay-2892.webp', 1, 'hienthi', 'tin-tuc', 1763453571, 1763455405);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `id` int NOT NULL,
+  `order_code` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `total_price` double DEFAULT '0',
+  `status` int DEFAULT '1',
+  `date_created` int DEFAULT '0',
+  `date_updated` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_detail`
+--
+
+CREATE TABLE `order_detail` (
+  `id` int NOT NULL,
+  `id_order` int NOT NULL,
+  `id_product` int NOT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` double DEFAULT '0',
+  `quantity` int DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -87,23 +181,23 @@ INSERT INTO `categories` (`id`, `slug`, `content`, `desc`, `name`, `photo`, `num
 --
 
 CREATE TABLE `product` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_list` int(11) DEFAULT NULL,
-  `id_brand` int(11) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `content` mediumtext DEFAULT NULL,
-  `desc` mediumtext DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `regular_price` double DEFAULT 0,
-  `discount` double DEFAULT 0,
-  `sale_price` double DEFAULT 0,
-  `numb` int(11) DEFAULT 0,
-  `status` varchar(255) DEFAULT NULL,
-  `type` varchar(30) DEFAULT NULL,
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
+  `id` int UNSIGNED NOT NULL,
+  `id_list` int DEFAULT NULL,
+  `id_brand` int DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `desc` mediumtext COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `regular_price` double DEFAULT '0',
+  `discount` double DEFAULT '0',
+  `sale_price` double DEFAULT '0',
+  `numb` int DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_created` int DEFAULT '0',
+  `date_updated` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -127,104 +221,29 @@ INSERT INTO `product` (`id`, `id_list`, `id_brand`, `photo`, `slug`, `content`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT NULL,
-  `fullname` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(20) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `note` mediumtext DEFAULT NULL,
-  `payment_method` varchar(50) DEFAULT 'cod',
-  `shipping_method` varchar(50) DEFAULT 'standard',
-  `total_qty` int(11) DEFAULT 0,
-  `total_price` double DEFAULT 0,
-  `status` varchar(50) DEFAULT 'pending',
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `orders`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_detail`
---
-
-CREATE TABLE `order_detail` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `order_id` int(10) UNSIGNED NOT NULL,
-  `product_id` int(10) UNSIGNED DEFAULT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_slug` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `price` double DEFAULT 0,
-  `qty` int(11) DEFAULT 0,
-  `total_price` double DEFAULT 0,
-  `date_created` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_detail`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `news`
---
-
-CREATE TABLE `news` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `desc` mediumtext DEFAULT NULL,
-  `content` mediumtext DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `numb` int(11) DEFAULT 0,
-  `status` varchar(255) DEFAULT NULL,
-  `type` varchar(30) DEFAULT 'tin-tuc',
-  `date_created` int(11) DEFAULT 0,
-  `date_updated` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `news`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_permission` int(11) DEFAULT 0,
-  `username` varchar(225) DEFAULT NULL,
-  `password` varchar(225) DEFAULT NULL,
-  `confirm_code` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `fullname` varchar(225) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `address` varchar(225) DEFAULT NULL,
-  `gender` tinyint(1) DEFAULT 0,
-  `login_session` varchar(255) DEFAULT NULL,
-  `user_token` varchar(255) DEFAULT NULL,
-  `lastlogin` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `role` tinyint(1) DEFAULT 1,
-  `secret_key` varchar(255) DEFAULT NULL,
-  `birthday` int(11) DEFAULT 0,
-  `numb` int(11) DEFAULT 0
+  `id` int UNSIGNED NOT NULL,
+  `id_permission` int DEFAULT '0',
+  `username` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `confirm_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fullname` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` tinyint(1) DEFAULT '0',
+  `login_session` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastlogin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` tinyint(1) DEFAULT '1',
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `birthday` int DEFAULT '0',
+  `numb` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -232,7 +251,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `id_permission`, `username`, `password`, `confirm_code`, `avatar`, `fullname`, `phone`, `email`, `address`, `gender`, `login_session`, `user_token`, `lastlogin`, `status`, `role`, `secret_key`, `birthday`, `numb`) VALUES
-(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '35832ba98fcf2b39553a0c6d4da9ab76', '1763339776', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
+(1, 0, 'admin', 'c0c68ae362117b07fae961c8023d2c7a', NULL, NULL, NULL, NULL, NULL, NULL, 0, '1ea1cca2a8ade4408303119eb2b2ebce', '284d7f83acb35e61a013dc4c675e03c9', '1763455803', 'hienthi', 1, '1ea1cca2a8ade4408303119eb2b2ebce', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -251,28 +270,10 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product`
+-- Indexes for table `customers`
 --
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_product_category` (`id_list`),
-  ADD KEY `fk_product_brand` (`id_brand`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `code` (`code`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `news`
@@ -281,6 +282,27 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`),
   ADD KEY `slug` (`slug`),
   ADD KEY `type` (`type`);
+
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_order` (`id_order`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_product_category` (`id_list`),
+  ADD KEY `fk_product_brand` (`id_brand`);
 
 --
 -- Indexes for table `user`
@@ -296,47 +318,59 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT for table `customers`
 --
-ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_detail`
---
-ALTER TABLE `order_detail`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `customers`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `order` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product`
@@ -344,19 +378,6 @@ ALTER TABLE `user`
 ALTER TABLE `product`
   ADD CONSTRAINT `fk_product_brand` FOREIGN KEY (`id_brand`) REFERENCES `brand` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`id_list`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD CONSTRAINT `fk_order_detail_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_order_detail_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
