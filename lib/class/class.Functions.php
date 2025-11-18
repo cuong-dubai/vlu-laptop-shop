@@ -87,7 +87,7 @@ class Functions
         $basehref = $configBase;
         $showtext = $msg;
         $page_transfer = $page;
-        $numb = $numb;
+        $numb = (bool) $numb;
         include("./templates/layout/transfer.php");
         exit();
     }
